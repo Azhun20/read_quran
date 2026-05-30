@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:skeleton_app/shared/styles/app_font_style.dart';
-import 'package:skeleton_app/shared/styles/color_style.dart';
+import 'package:read_quran/shared/styles/app_font_style.dart';
+import 'package:read_quran/shared/styles/color_style.dart';
 
 /// ThemeContextExtension
 ///

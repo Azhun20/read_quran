@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:skeleton_app/core/error/failure.dart';
-import 'package:skeleton_app/features/auth/domain/repositories/auth_repository.dart';
+import 'package:read_quran/core/error/failure.dart';
+import 'package:read_quran/features/auth/domain/repositories/auth_repository.dart';
 
 class LogoutUseCase {
   final AuthRepository repository;

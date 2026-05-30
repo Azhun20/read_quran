@@ -1,14 +1,14 @@
 import 'package:get_it/get_it.dart';
-import 'package:skeleton_app/features/auth/data/datasources/auth_local_datasource.dart';
-import 'package:skeleton_app/features/auth/data/datasources/auth_remote_datasource.dart';
-import 'package:skeleton_app/features/auth/data/repositories/auth_repository_impl.dart';
-import 'package:skeleton_app/features/auth/domain/repositories/auth_repository.dart';
-import 'package:skeleton_app/features/auth/domain/usecases/check_auth_status_usecase.dart';
-import 'package:skeleton_app/features/auth/domain/usecases/login_usecase.dart';
-import 'package:skeleton_app/features/auth/domain/usecases/logout_usecase.dart';
-import 'package:skeleton_app/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:skeleton_app/utils/services/api_service.dart';
-import 'package:skeleton_app/utils/services/hive_service.dart';
+import 'package:read_quran/features/auth/data/datasources/auth_local_datasource.dart';
+import 'package:read_quran/features/auth/data/datasources/auth_remote_datasource.dart';
+import 'package:read_quran/features/auth/data/repositories/auth_repository_impl.dart';
+import 'package:read_quran/features/auth/domain/repositories/auth_repository.dart';
+import 'package:read_quran/features/auth/domain/usecases/check_auth_status_usecase.dart';
+import 'package:read_quran/features/auth/domain/usecases/login_usecase.dart';
+import 'package:read_quran/features/auth/domain/usecases/logout_usecase.dart';
+import 'package:read_quran/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:read_quran/utils/services/api_service.dart';
+import 'package:read_quran/utils/services/hive_service.dart';
 
 class AuthDI {
   static void inject(GetIt sl) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:skeleton_app/shared/styles/color_style.dart';
+import 'package:read_quran/shared/styles/color_style.dart';
 
 class AppTheme {
   AppTheme._();

@@ -1,5 +1,5 @@
-import 'package:skeleton_app/constants/hive_constant.dart';
-import 'package:skeleton_app/utils/services/hive_service.dart';
+import 'package:read_quran/constants/hive_constant.dart';
+import 'package:read_quran/utils/services/hive_service.dart';
 
 abstract class AuthLocalDataSource {
   Future<void> saveUser(Map<String, dynamic> user);

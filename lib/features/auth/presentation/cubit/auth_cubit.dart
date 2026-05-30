@@ -1,10 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:skeleton_app/core/logging/app_logger.dart';
-import 'package:skeleton_app/features/auth/domain/entities/user_entity.dart';
-import 'package:skeleton_app/features/auth/domain/usecases/check_auth_status_usecase.dart';
-import 'package:skeleton_app/features/auth/domain/usecases/login_usecase.dart';
-import 'package:skeleton_app/features/auth/domain/usecases/logout_usecase.dart';
+import 'package:read_quran/core/logging/app_logger.dart';
+import 'package:read_quran/features/auth/domain/entities/user_entity.dart';
+import 'package:read_quran/features/auth/domain/usecases/check_auth_status_usecase.dart';
+import 'package:read_quran/features/auth/domain/usecases/login_usecase.dart';
+import 'package:read_quran/features/auth/domain/usecases/logout_usecase.dart';
 
 part 'auth_cubit.freezed.dart';
 part 'auth_state.dart';

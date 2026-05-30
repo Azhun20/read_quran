@@ -1,6 +1,6 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:skeleton_app/constants/hive_constant.dart';
-import 'package:skeleton_app/core/logging/app_logger.dart';
+import 'package:read_quran/constants/hive_constant.dart';
+import 'package:read_quran/core/logging/app_logger.dart';
 
 /// Service for managing local storage using Hive
 class HiveService {

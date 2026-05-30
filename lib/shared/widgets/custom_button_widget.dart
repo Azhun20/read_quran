@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:skeleton_app/shared/styles/color_style.dart';
-import 'package:skeleton_app/utils/extensions/theme_context_extension.dart';
+import 'package:read_quran/shared/styles/color_style.dart';
+import 'package:read_quran/utils/extensions/theme_context_extension.dart';
 
 enum TButtonType { filled, outlined, text }
 

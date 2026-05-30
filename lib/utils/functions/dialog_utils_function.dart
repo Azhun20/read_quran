@@ -1,10 +1,10 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:skeleton_app/constants/asset_consstant.dart';
-import 'package:skeleton_app/shared/styles/color_style.dart';
-import 'package:skeleton_app/shared/widgets/custom_button_widget.dart';
-import 'package:skeleton_app/utils/extensions/theme_context_extension.dart';
+import 'package:read_quran/constants/asset_consstant.dart';
+import 'package:read_quran/shared/styles/color_style.dart';
+import 'package:read_quran/shared/widgets/custom_button_widget.dart';
+import 'package:read_quran/utils/extensions/theme_context_extension.dart';
 
 class DialogUtilsFunction {
   static Flushbar? _currentFlushbar;

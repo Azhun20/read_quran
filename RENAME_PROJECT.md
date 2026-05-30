@@ -80,11 +80,11 @@ name: skeleton_app  →  name: my_app
 
 ## Langkah 3 — Dart Imports (seluruh `lib/`)
 
-Semua file `.dart` menggunakan prefix `package:skeleton_app/...`.
+Semua file `.dart` menggunakan prefix `package:read_quran/...`.
 Lakukan **Find & Replace** di seluruh project:
 
 ```
-Cari    : package:skeleton_app/
+Cari    : package:read_quran/
 Ganti   : package:my_app/
 ```
 
@@ -205,7 +205,7 @@ flutter run
 
 ### Manual
 - [ ] `pubspec.yaml` — `name:`
-- [ ] Dart imports — `package:skeleton_app/` → `package:my_app/` (Find & Replace)
+- [ ] Dart imports — `package:read_quran/` → `package:my_app/` (Find & Replace)
 - [ ] Android `AndroidManifest.xml` — `android:label`
 - [ ] iOS `Info.plist` — `CFBundleDisplayName` & `CFBundleName`
 - [ ] macOS `AppInfo.xcconfig` — `PRODUCT_NAME` & `PRODUCT_BUNDLE_IDENTIFIER`
