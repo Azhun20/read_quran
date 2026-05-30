@@ -1,0 +1,67 @@
+import 'package:equatable/equatable.dart';
+
+/// Shared entity representing an Ayah (verse) in the Quran
+/// Used across multiple features (detail, search)
+class AyahEntity extends Equatable {
+  const AyahEntity({
+    this.number,
+    this.text,
+    this.audioUrl,
+    this.numberInSurah,
+    this.juz,
+    this.page,
+    this.surahNumber,
+    this.surahName,
+    this.translation,
+    this.transliteration,
+    this.sajda,
+  });
+
+  /// Absolute ayah number in the Quran
+  final int? number;
+
+  /// The text content of the ayah
+  final String? text;
+
+  /// Audio URL for this specific ayah
+  final String? audioUrl;
+
+  /// Ayah number within its surah
+  final int? numberInSurah;
+
+  /// Juz (part) number
+  final int? juz;
+
+  /// Page number in the Mushaf
+  final int? page;
+
+  /// The surah number this ayah belongs to
+  final int? surahNumber;
+
+  /// The surah name this ayah belongs to
+  final String? surahName;
+
+  /// Translation text (optional)
+  final String? translation;
+
+  /// Transliteration text (optional)
+  final String? transliteration;
+
+  /// Sajda information if this ayah requires prostration
+  final bool? sajda;
+
+  @override
+  List<Object?> get props => [
+        number,
+        text,
+        audioUrl,
+        numberInSurah,
+        juz,
+        page,
+        surahNumber,
+        surahName,
+        translation,
+        transliteration,
+        sajda,
+      ];
+}

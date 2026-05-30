@@ -41,6 +41,14 @@ dependencies:
   image: ^4.1.7
   path_provider: ^2.1.2
 
+  # Audio Playback
+  just_audio: ^0.9.36
+  audio_video_progress_bar: ^2.0.3
+
+  # UI Enhancements
+  shimmer: ^3.0.0
+  cached_network_image: ^3.3.1
+
   # Utils
   flutter_svg: ^2.2.3
   equatable: ^2.0.5

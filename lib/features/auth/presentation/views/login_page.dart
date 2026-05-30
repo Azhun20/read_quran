@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:read_quran/configs/routes/route.dart';
 import 'package:read_quran/core/extensions/context_extensions.dart';
 import 'package:read_quran/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:read_quran/shared/styles/app_font_style.dart';
@@ -43,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
       body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state.isAuthenticated) {
-            context.go(Routes.dashboard);
+            // context.go(Route.dashboard);
           }
           if (state.errorMessage != null) {
             context.showErrorSnackBar(state.errorMessage!);
@@ -59,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(
+                    const Text(
                       'Welcome Back',
                       style: AppFontStyle.display1Bold,
                       textAlign: TextAlign.center,
