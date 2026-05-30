@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:read_quran/features/auth/di/auth_di.dart';
 import 'package:read_quran/features/quran_list/di/quran_list_di.dart';
+import 'package:read_quran/features/quran_detail/di/quran_detail_di.dart';
 import 'package:read_quran/utils/services/api_service.dart';
 import 'package:read_quran/utils/services/hive_service.dart';
 
@@ -23,6 +24,7 @@ Future<void> setupServiceLocator() async {
   // Register features
   AuthDI.inject(sl);
   QuranListDI.inject();
+  QuranDetailDI.inject();
 
   _isSetupComplete = true;
 }
