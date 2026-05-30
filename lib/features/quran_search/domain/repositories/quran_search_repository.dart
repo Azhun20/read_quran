@@ -1,5 +1,11 @@
-import '../entities/quran_search_entity.dart';
+import 'package:dartz/dartz.dart';
+import 'package:read_quran/core/error/failure.dart';
+import 'package:read_quran/shared/domain/entities/quran/ayah_entity.dart';
 
-/// Abstraksi repository untuk mengelola QuranSearch.
-/// Definisikan method yang diperlukan saat implementasi.
-abstract class QuranSearchRepository {}
+abstract class QuranSearchRepository {
+  Future<Either<Failure, List<AyahEntity>>> searchQuran({
+    required String keyword,
+    int? surahNumber,
+    String? edition,
+  });
+}

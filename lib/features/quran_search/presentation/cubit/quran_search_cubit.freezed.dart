@@ -18,7 +18,10 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$QuranSearchState {
   bool get isLoading => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
-  int get value => throw _privateConstructorUsedError;
+  List<AyahEntity> get searchResults => throw _privateConstructorUsedError;
+  String get searchKeyword => throw _privateConstructorUsedError;
+  int? get selectedSurahNumber => throw _privateConstructorUsedError;
+  int get resultCount => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $QuranSearchStateCopyWith<QuranSearchState> get copyWith =>
@@ -31,7 +34,13 @@ abstract class $QuranSearchStateCopyWith<$Res> {
           QuranSearchState value, $Res Function(QuranSearchState) then) =
       _$QuranSearchStateCopyWithImpl<$Res, QuranSearchState>;
   @useResult
-  $Res call({bool isLoading, String? errorMessage, int value});
+  $Res call(
+      {bool isLoading,
+      String? errorMessage,
+      List<AyahEntity> searchResults,
+      String searchKeyword,
+      int? selectedSurahNumber,
+      int resultCount});
 }
 
 /// @nodoc
@@ -49,7 +58,10 @@ class _$QuranSearchStateCopyWithImpl<$Res, $Val extends QuranSearchState>
   $Res call({
     Object? isLoading = null,
     Object? errorMessage = freezed,
-    Object? value = null,
+    Object? searchResults = null,
+    Object? searchKeyword = null,
+    Object? selectedSurahNumber = freezed,
+    Object? resultCount = null,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -60,9 +72,21 @@ class _$QuranSearchStateCopyWithImpl<$Res, $Val extends QuranSearchState>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
-      value: null == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
+      searchResults: null == searchResults
+          ? _value.searchResults
+          : searchResults // ignore: cast_nullable_to_non_nullable
+              as List<AyahEntity>,
+      searchKeyword: null == searchKeyword
+          ? _value.searchKeyword
+          : searchKeyword // ignore: cast_nullable_to_non_nullable
+              as String,
+      selectedSurahNumber: freezed == selectedSurahNumber
+          ? _value.selectedSurahNumber
+          : selectedSurahNumber // ignore: cast_nullable_to_non_nullable
+              as int?,
+      resultCount: null == resultCount
+          ? _value.resultCount
+          : resultCount // ignore: cast_nullable_to_non_nullable
               as int,
     ) as $Val);
   }
@@ -76,7 +100,13 @@ abstract class _$$QuranSearchStateImplCopyWith<$Res>
       __$$QuranSearchStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoading, String? errorMessage, int value});
+  $Res call(
+      {bool isLoading,
+      String? errorMessage,
+      List<AyahEntity> searchResults,
+      String searchKeyword,
+      int? selectedSurahNumber,
+      int resultCount});
 }
 
 /// @nodoc
@@ -92,7 +122,10 @@ class __$$QuranSearchStateImplCopyWithImpl<$Res>
   $Res call({
     Object? isLoading = null,
     Object? errorMessage = freezed,
-    Object? value = null,
+    Object? searchResults = null,
+    Object? searchKeyword = null,
+    Object? selectedSurahNumber = freezed,
+    Object? resultCount = null,
   }) {
     return _then(_$QuranSearchStateImpl(
       isLoading: null == isLoading
@@ -103,9 +136,21 @@ class __$$QuranSearchStateImplCopyWithImpl<$Res>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
-      value: null == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
+      searchResults: null == searchResults
+          ? _value._searchResults
+          : searchResults // ignore: cast_nullable_to_non_nullable
+              as List<AyahEntity>,
+      searchKeyword: null == searchKeyword
+          ? _value.searchKeyword
+          : searchKeyword // ignore: cast_nullable_to_non_nullable
+              as String,
+      selectedSurahNumber: freezed == selectedSurahNumber
+          ? _value.selectedSurahNumber
+          : selectedSurahNumber // ignore: cast_nullable_to_non_nullable
+              as int?,
+      resultCount: null == resultCount
+          ? _value.resultCount
+          : resultCount // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -115,20 +160,40 @@ class __$$QuranSearchStateImplCopyWithImpl<$Res>
 
 class _$QuranSearchStateImpl implements _QuranSearchState {
   const _$QuranSearchStateImpl(
-      {this.isLoading = false, this.errorMessage, this.value = 0});
+      {this.isLoading = false,
+      this.errorMessage,
+      final List<AyahEntity> searchResults = const [],
+      this.searchKeyword = '',
+      this.selectedSurahNumber,
+      this.resultCount = 0})
+      : _searchResults = searchResults;
 
   @override
   @JsonKey()
   final bool isLoading;
   @override
   final String? errorMessage;
+  final List<AyahEntity> _searchResults;
   @override
   @JsonKey()
-  final int value;
+  List<AyahEntity> get searchResults {
+    if (_searchResults is EqualUnmodifiableListView) return _searchResults;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_searchResults);
+  }
+
+  @override
+  @JsonKey()
+  final String searchKeyword;
+  @override
+  final int? selectedSurahNumber;
+  @override
+  @JsonKey()
+  final int resultCount;
 
   @override
   String toString() {
-    return 'QuranSearchState(isLoading: $isLoading, errorMessage: $errorMessage, value: $value)';
+    return 'QuranSearchState(isLoading: $isLoading, errorMessage: $errorMessage, searchResults: $searchResults, searchKeyword: $searchKeyword, selectedSurahNumber: $selectedSurahNumber, resultCount: $resultCount)';
   }
 
   @override
@@ -140,11 +205,25 @@ class _$QuranSearchStateImpl implements _QuranSearchState {
                 other.isLoading == isLoading) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
-            (identical(other.value, value) || other.value == value));
+            const DeepCollectionEquality()
+                .equals(other._searchResults, _searchResults) &&
+            (identical(other.searchKeyword, searchKeyword) ||
+                other.searchKeyword == searchKeyword) &&
+            (identical(other.selectedSurahNumber, selectedSurahNumber) ||
+                other.selectedSurahNumber == selectedSurahNumber) &&
+            (identical(other.resultCount, resultCount) ||
+                other.resultCount == resultCount));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading, errorMessage, value);
+  int get hashCode => Object.hash(
+      runtimeType,
+      isLoading,
+      errorMessage,
+      const DeepCollectionEquality().hash(_searchResults),
+      searchKeyword,
+      selectedSurahNumber,
+      resultCount);
 
   @JsonKey(ignore: true)
   @override
@@ -158,14 +237,23 @@ abstract class _QuranSearchState implements QuranSearchState {
   const factory _QuranSearchState(
       {final bool isLoading,
       final String? errorMessage,
-      final int value}) = _$QuranSearchStateImpl;
+      final List<AyahEntity> searchResults,
+      final String searchKeyword,
+      final int? selectedSurahNumber,
+      final int resultCount}) = _$QuranSearchStateImpl;
 
   @override
   bool get isLoading;
   @override
   String? get errorMessage;
   @override
-  int get value;
+  List<AyahEntity> get searchResults;
+  @override
+  String get searchKeyword;
+  @override
+  int? get selectedSurahNumber;
+  @override
+  int get resultCount;
   @override
   @JsonKey(ignore: true)
   _$$QuranSearchStateImplCopyWith<_$QuranSearchStateImpl> get copyWith =>
