@@ -69,14 +69,17 @@ class AyahCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16),
-            Text(
-              ayah.text ?? '',
-              style: context.textTheme.titleLarge?.copyWith(
-                fontFamily: 'Rajdhani',
-                height: 1.8,
+            SizedBox(
+              width: double.infinity,
+              child: Text(
+                ayah.text ?? '',
+                style: context.textTheme.titleLarge?.copyWith(
+                  fontFamily: 'Rajdhani',
+                  height: 1.8,
+                ),
+                textAlign: TextAlign.right,
+                textDirection: TextDirection.rtl,
               ),
-              textAlign: TextAlign.right,
-              textDirection: TextDirection.rtl,
             ),
           ],
         ),

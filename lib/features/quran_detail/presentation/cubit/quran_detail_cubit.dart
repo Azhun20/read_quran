@@ -26,6 +26,7 @@ class QuranDetailCubit extends Cubit<QuranDetailState> {
   StreamSubscription? _positionSubscription;
   StreamSubscription? _durationSubscription;
   StreamSubscription? _playingSubscription;
+  StreamSubscription? _currentIndexSubscription;
 
   void _initAudioListeners() {
     // Listen to position changes
@@ -44,6 +45,11 @@ class QuranDetailCubit extends Cubit<QuranDetailState> {
         isPlaying: isPlaying,
         currentAyahIndex: _audioPlayerService.currentIndex,
       ));
+    });
+
+    // Listen to current ayah index changes
+    _currentIndexSubscription = _audioPlayerService.currentIndexStream.listen((index) {
+      emit(state.copyWith(currentAyahIndex: index));
     });
   }
 
@@ -152,7 +158,8 @@ class QuranDetailCubit extends Cubit<QuranDetailState> {
     await _positionSubscription?.cancel();
     await _durationSubscription?.cancel();
     await _playingSubscription?.cancel();
-    await _audioPlayerService.dispose();
+    await _currentIndexSubscription?.cancel();
+    await _audioPlayerService.stop();
     return super.close();
   }
 }

@@ -4,6 +4,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:read_quran/core/logging/app_logger.dart';
 import 'package:read_quran/shared/domain/entities/quran/ayah_entity.dart';
 
+
 /// Service to manage Quran audio playback
 class AudioPlayerService {
   AudioPlayerService() {
@@ -13,6 +14,8 @@ class AudioPlayerService {
   final AudioPlayer _player = AudioPlayer();
   List<AyahEntity>? _playlist;
   int _currentIndex = 0;
+  final StreamController<int> _currentIndexController =
+      StreamController<int>.broadcast();
 
   // Streams
   Stream<Duration> get positionStream => _player.positionStream;
@@ -21,6 +24,7 @@ class AudioPlayerService {
   Stream<bool> get playingStream => _player.playingStream;
   Stream<ProcessingState> get processingStateStream =>
       _player.processingStateStream;
+  Stream<int> get currentIndexStream => _currentIndexController.stream;
 
   // Getters
   AudioPlayer get player => _player;
@@ -49,6 +53,7 @@ class AudioPlayerService {
     try {
       _playlist = ayahs;
       _currentIndex = startIndex;
+      _currentIndexController.add(_currentIndex);
 
       if (ayahs.isEmpty) {
         AppLogger.warning('Attempted to load empty playlist');
@@ -107,6 +112,7 @@ class AudioPlayerService {
 
     if (_currentIndex < _playlist!.length - 1) {
       _currentIndex++;
+      _currentIndexController.add(_currentIndex);
       final nextAyah = _playlist![_currentIndex];
 
       if (nextAyah.audioUrl != null && nextAyah.audioUrl!.isNotEmpty) {
@@ -119,8 +125,20 @@ class AudioPlayerService {
         }
       }
     } else {
-      AppLogger.info('Reached end of playlist');
-      await stop();
+      // Reached end of playlist — reset to first ayah but stay paused
+      _currentIndex = 0;
+      _currentIndexController.add(_currentIndex);
+      final firstAyah = _playlist![0];
+      if (firstAyah.audioUrl != null && firstAyah.audioUrl!.isNotEmpty) {
+        try {
+          await _player.setUrl(firstAyah.audioUrl!);
+          await _player.pause();
+          await _player.seek(Duration.zero);
+        } catch (e, stackTrace) {
+          AppLogger.error('Failed to reset to first ayah', e, stackTrace);
+        }
+      }
+      AppLogger.info('Reached end of playlist, reset to first ayah');
     }
   }
 
@@ -130,6 +148,7 @@ class AudioPlayerService {
 
     if (_currentIndex > 0) {
       _currentIndex--;
+      _currentIndexController.add(_currentIndex);
       final prevAyah = _playlist![_currentIndex];
 
       if (prevAyah.audioUrl != null && prevAyah.audioUrl!.isNotEmpty) {
@@ -184,6 +203,7 @@ class AudioPlayerService {
     }
 
     _currentIndex = index;
+    _currentIndexController.add(_currentIndex);
     final ayah = _playlist![index];
 
     if (ayah.audioUrl != null && ayah.audioUrl!.isNotEmpty) {
@@ -200,6 +220,7 @@ class AudioPlayerService {
   /// Dispose the audio player
   Future<void> dispose() async {
     try {
+      await _currentIndexController.close();
       await _player.dispose();
       _playlist = null;
       AppLogger.info('Audio player disposed');

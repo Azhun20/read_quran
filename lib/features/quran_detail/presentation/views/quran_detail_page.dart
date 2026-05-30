@@ -22,6 +22,8 @@ class QuranDetailPage extends StatefulWidget {
 }
 
 class _QuranDetailPageState extends State<QuranDetailPage> {
+  final Map<int, GlobalKey> _itemKeys = {};
+
   @override
   void initState() {
     super.initState();
@@ -33,97 +35,103 @@ class _QuranDetailPageState extends State<QuranDetailPage> {
     });
   }
 
+  GlobalKey _keyForIndex(int index) {
+    return _itemKeys.putIfAbsent(index, () => GlobalKey());
+  }
+
+  void _scrollToIndex(int index) {
+    final key = _itemKeys[index];
+    final ctx = key?.currentContext;
+    if (ctx == null) return;
+
+    Scrollable.ensureVisible(
+      ctx,
+      alignment: 0.5, // 0.5 = center of viewport
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeInOut,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: context.colorScheme.surface,
-      body: BlocBuilder<QuranDetailCubit, QuranDetailState>(
+    return BlocListener<QuranDetailCubit, QuranDetailState>(
+      listenWhen: (previous, current) =>
+          previous.currentAyahIndex != current.currentAyahIndex,
+      listener: (context, state) {
+        if (state.isPlaying) {
+          _scrollToIndex(state.currentAyahIndex);
+        }
+      },
+      child: BlocBuilder<QuranDetailCubit, QuranDetailState>(
         builder: (context, state) {
-          return Column(
-            children: [
-              // Header
-              SafeArea(
-                bottom: false,
-                child: Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: context.colorScheme.primaryContainer,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 10,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
+          return Scaffold(
+            backgroundColor: context.colorScheme.surface,
+            appBar: AppBar(
+              titleSpacing: 0,
+              centerTitle: false,
+
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    state.surah?.englishName ?? 'Loading...',
+                    style: context.textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  child: Row(
-                    children: [
-                      IconButton(
-                        onPressed: () => Navigator.pop(context),
-                        icon: const Icon(Icons.arrow_back),
-                      ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              state.surah?.englishName ?? 'Loading...',
-                              style: context.textTheme.titleLarge?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            if (state.surah != null)
-                              Text(
-                                '${state.surah!.englishNameTranslation} • ${state.surah!.numberOfAyahs} Ayahs',
-                                style: context.textTheme.bodySmall,
-                              ),
-                          ],
-                        ),
-                      ),
-                      Text(
-                        state.surah?.name ?? '',
-                        style: context.textTheme.headlineMedium?.copyWith(
-                          fontFamily: 'Rajdhani',
-                          color: context.colorScheme.primary,
-                        ),
-                      ),
-                    ],
+                  if (state.surah != null)
+                    Text(
+                      '${state.surah!.englishNameTranslation} • ${state.surah!.numberOfAyahs} Ayahs',
+                      style: context.textTheme.bodySmall,
+                    ),
+                ],
+              ),
+              actions: [
+                Text(
+                  state.surah?.name ?? '',
+                  style: context.textTheme.headlineMedium?.copyWith(
+                    fontFamily: 'Rajdhani',
                   ),
                 ),
-              ),
+                const SizedBox(width: 16),
+              ],
+            ),
+            body: Column(
+              children: [
+                // Ayah List
+                Expanded(
+                  child: state.isLoading
+                      ? const Center(child: CircularProgressIndicator())
+                      : state.errorMessage != null
+                      ? _buildErrorWidget(state.errorMessage!)
+                      : ListView.builder(
+                          padding: const EdgeInsets.only(bottom: 100),
+                          itemCount: state.ayahs.length,
+                          itemBuilder: (context, index) {
+                            final ayah = state.ayahs[index];
+                            final isPlaying =
+                                state.isPlaying &&
+                                state.currentAyahIndex == index;
 
-              // Ayah List
-              Expanded(
-                child: state.isLoading
-                    ? const Center(child: CircularProgressIndicator())
-                    : state.errorMessage != null
-                    ? _buildErrorWidget(state.errorMessage!)
-                    : ListView.builder(
-                        padding: const EdgeInsets.only(bottom: 100),
-                        itemCount: state.ayahs.length,
-                        itemBuilder: (context, index) {
-                          final ayah = state.ayahs[index];
-                          final isPlaying =
-                              state.isPlaying &&
-                              state.currentAyahIndex == index;
-
-                          return AyahCard(
-                            ayah: ayah,
-                            isPlaying: isPlaying,
-                            onTap: () {
-                              context.read<QuranDetailCubit>().playAyahAt(
-                                index,
-                              );
-                            },
-                          );
-                        },
-                      ),
-              ),
-            ],
+                            return AyahCard(
+                              key: _keyForIndex(index),
+                              ayah: ayah,
+                              isPlaying: isPlaying,
+                              onTap: () {
+                                context.read<QuranDetailCubit>().playAyahAt(
+                                  index,
+                                );
+                              },
+                            );
+                          },
+                        ),
+                ),
+              ],
+            ),
+            bottomNavigationBar: const AudioControlsWidget(),
           );
         },
       ),
-      bottomNavigationBar: const AudioControlsWidget(),
     );
   }
 
