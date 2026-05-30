@@ -10,8 +10,7 @@ import 'package:read_quran/features/quran_list/presentation/views/quran_list_pag
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation:
-        Route.quranList, // Changed to start with quranList for testing
+    initialLocation: Route.quranList, // Default page: Quran list
     routes: [
       GoRoute(
         path: Route.login,
