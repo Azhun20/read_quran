@@ -18,7 +18,14 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$QuranDetailState {
   bool get isLoading => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
-  int get value => throw _privateConstructorUsedError;
+  SurahEntity? get surah => throw _privateConstructorUsedError;
+  List<AyahEntity> get ayahs => throw _privateConstructorUsedError;
+  bool get isPlaying => throw _privateConstructorUsedError;
+  int get currentAyahIndex => throw _privateConstructorUsedError;
+  Duration? get currentPosition => throw _privateConstructorUsedError;
+  Duration? get totalDuration => throw _privateConstructorUsedError;
+  double get playbackSpeed => throw _privateConstructorUsedError;
+  double get volume => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $QuranDetailStateCopyWith<QuranDetailState> get copyWith =>
@@ -31,7 +38,17 @@ abstract class $QuranDetailStateCopyWith<$Res> {
           QuranDetailState value, $Res Function(QuranDetailState) then) =
       _$QuranDetailStateCopyWithImpl<$Res, QuranDetailState>;
   @useResult
-  $Res call({bool isLoading, String? errorMessage, int value});
+  $Res call(
+      {bool isLoading,
+      String? errorMessage,
+      SurahEntity? surah,
+      List<AyahEntity> ayahs,
+      bool isPlaying,
+      int currentAyahIndex,
+      Duration? currentPosition,
+      Duration? totalDuration,
+      double playbackSpeed,
+      double volume});
 }
 
 /// @nodoc
@@ -49,7 +66,14 @@ class _$QuranDetailStateCopyWithImpl<$Res, $Val extends QuranDetailState>
   $Res call({
     Object? isLoading = null,
     Object? errorMessage = freezed,
-    Object? value = null,
+    Object? surah = freezed,
+    Object? ayahs = null,
+    Object? isPlaying = null,
+    Object? currentAyahIndex = null,
+    Object? currentPosition = freezed,
+    Object? totalDuration = freezed,
+    Object? playbackSpeed = null,
+    Object? volume = null,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -60,10 +84,38 @@ class _$QuranDetailStateCopyWithImpl<$Res, $Val extends QuranDetailState>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
-      value: null == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
+      surah: freezed == surah
+          ? _value.surah
+          : surah // ignore: cast_nullable_to_non_nullable
+              as SurahEntity?,
+      ayahs: null == ayahs
+          ? _value.ayahs
+          : ayahs // ignore: cast_nullable_to_non_nullable
+              as List<AyahEntity>,
+      isPlaying: null == isPlaying
+          ? _value.isPlaying
+          : isPlaying // ignore: cast_nullable_to_non_nullable
+              as bool,
+      currentAyahIndex: null == currentAyahIndex
+          ? _value.currentAyahIndex
+          : currentAyahIndex // ignore: cast_nullable_to_non_nullable
               as int,
+      currentPosition: freezed == currentPosition
+          ? _value.currentPosition
+          : currentPosition // ignore: cast_nullable_to_non_nullable
+              as Duration?,
+      totalDuration: freezed == totalDuration
+          ? _value.totalDuration
+          : totalDuration // ignore: cast_nullable_to_non_nullable
+              as Duration?,
+      playbackSpeed: null == playbackSpeed
+          ? _value.playbackSpeed
+          : playbackSpeed // ignore: cast_nullable_to_non_nullable
+              as double,
+      volume: null == volume
+          ? _value.volume
+          : volume // ignore: cast_nullable_to_non_nullable
+              as double,
     ) as $Val);
   }
 }
@@ -76,7 +128,17 @@ abstract class _$$QuranDetailStateImplCopyWith<$Res>
       __$$QuranDetailStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoading, String? errorMessage, int value});
+  $Res call(
+      {bool isLoading,
+      String? errorMessage,
+      SurahEntity? surah,
+      List<AyahEntity> ayahs,
+      bool isPlaying,
+      int currentAyahIndex,
+      Duration? currentPosition,
+      Duration? totalDuration,
+      double playbackSpeed,
+      double volume});
 }
 
 /// @nodoc
@@ -92,7 +154,14 @@ class __$$QuranDetailStateImplCopyWithImpl<$Res>
   $Res call({
     Object? isLoading = null,
     Object? errorMessage = freezed,
-    Object? value = null,
+    Object? surah = freezed,
+    Object? ayahs = null,
+    Object? isPlaying = null,
+    Object? currentAyahIndex = null,
+    Object? currentPosition = freezed,
+    Object? totalDuration = freezed,
+    Object? playbackSpeed = null,
+    Object? volume = null,
   }) {
     return _then(_$QuranDetailStateImpl(
       isLoading: null == isLoading
@@ -103,10 +172,38 @@ class __$$QuranDetailStateImplCopyWithImpl<$Res>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
-      value: null == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
+      surah: freezed == surah
+          ? _value.surah
+          : surah // ignore: cast_nullable_to_non_nullable
+              as SurahEntity?,
+      ayahs: null == ayahs
+          ? _value._ayahs
+          : ayahs // ignore: cast_nullable_to_non_nullable
+              as List<AyahEntity>,
+      isPlaying: null == isPlaying
+          ? _value.isPlaying
+          : isPlaying // ignore: cast_nullable_to_non_nullable
+              as bool,
+      currentAyahIndex: null == currentAyahIndex
+          ? _value.currentAyahIndex
+          : currentAyahIndex // ignore: cast_nullable_to_non_nullable
               as int,
+      currentPosition: freezed == currentPosition
+          ? _value.currentPosition
+          : currentPosition // ignore: cast_nullable_to_non_nullable
+              as Duration?,
+      totalDuration: freezed == totalDuration
+          ? _value.totalDuration
+          : totalDuration // ignore: cast_nullable_to_non_nullable
+              as Duration?,
+      playbackSpeed: null == playbackSpeed
+          ? _value.playbackSpeed
+          : playbackSpeed // ignore: cast_nullable_to_non_nullable
+              as double,
+      volume: null == volume
+          ? _value.volume
+          : volume // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -115,7 +212,17 @@ class __$$QuranDetailStateImplCopyWithImpl<$Res>
 
 class _$QuranDetailStateImpl implements _QuranDetailState {
   const _$QuranDetailStateImpl(
-      {this.isLoading = false, this.errorMessage, this.value = 0});
+      {this.isLoading = false,
+      this.errorMessage,
+      this.surah,
+      final List<AyahEntity> ayahs = const [],
+      this.isPlaying = false,
+      this.currentAyahIndex = 0,
+      this.currentPosition,
+      this.totalDuration,
+      this.playbackSpeed = 1.0,
+      this.volume = 1.0})
+      : _ayahs = ayahs;
 
   @override
   @JsonKey()
@@ -123,12 +230,36 @@ class _$QuranDetailStateImpl implements _QuranDetailState {
   @override
   final String? errorMessage;
   @override
+  final SurahEntity? surah;
+  final List<AyahEntity> _ayahs;
+  @override
   @JsonKey()
-  final int value;
+  List<AyahEntity> get ayahs {
+    if (_ayahs is EqualUnmodifiableListView) return _ayahs;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_ayahs);
+  }
+
+  @override
+  @JsonKey()
+  final bool isPlaying;
+  @override
+  @JsonKey()
+  final int currentAyahIndex;
+  @override
+  final Duration? currentPosition;
+  @override
+  final Duration? totalDuration;
+  @override
+  @JsonKey()
+  final double playbackSpeed;
+  @override
+  @JsonKey()
+  final double volume;
 
   @override
   String toString() {
-    return 'QuranDetailState(isLoading: $isLoading, errorMessage: $errorMessage, value: $value)';
+    return 'QuranDetailState(isLoading: $isLoading, errorMessage: $errorMessage, surah: $surah, ayahs: $ayahs, isPlaying: $isPlaying, currentAyahIndex: $currentAyahIndex, currentPosition: $currentPosition, totalDuration: $totalDuration, playbackSpeed: $playbackSpeed, volume: $volume)';
   }
 
   @override
@@ -140,11 +271,34 @@ class _$QuranDetailStateImpl implements _QuranDetailState {
                 other.isLoading == isLoading) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
-            (identical(other.value, value) || other.value == value));
+            (identical(other.surah, surah) || other.surah == surah) &&
+            const DeepCollectionEquality().equals(other._ayahs, _ayahs) &&
+            (identical(other.isPlaying, isPlaying) ||
+                other.isPlaying == isPlaying) &&
+            (identical(other.currentAyahIndex, currentAyahIndex) ||
+                other.currentAyahIndex == currentAyahIndex) &&
+            (identical(other.currentPosition, currentPosition) ||
+                other.currentPosition == currentPosition) &&
+            (identical(other.totalDuration, totalDuration) ||
+                other.totalDuration == totalDuration) &&
+            (identical(other.playbackSpeed, playbackSpeed) ||
+                other.playbackSpeed == playbackSpeed) &&
+            (identical(other.volume, volume) || other.volume == volume));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading, errorMessage, value);
+  int get hashCode => Object.hash(
+      runtimeType,
+      isLoading,
+      errorMessage,
+      surah,
+      const DeepCollectionEquality().hash(_ayahs),
+      isPlaying,
+      currentAyahIndex,
+      currentPosition,
+      totalDuration,
+      playbackSpeed,
+      volume);
 
   @JsonKey(ignore: true)
   @override
@@ -158,14 +312,35 @@ abstract class _QuranDetailState implements QuranDetailState {
   const factory _QuranDetailState(
       {final bool isLoading,
       final String? errorMessage,
-      final int value}) = _$QuranDetailStateImpl;
+      final SurahEntity? surah,
+      final List<AyahEntity> ayahs,
+      final bool isPlaying,
+      final int currentAyahIndex,
+      final Duration? currentPosition,
+      final Duration? totalDuration,
+      final double playbackSpeed,
+      final double volume}) = _$QuranDetailStateImpl;
 
   @override
   bool get isLoading;
   @override
   String? get errorMessage;
   @override
-  int get value;
+  SurahEntity? get surah;
+  @override
+  List<AyahEntity> get ayahs;
+  @override
+  bool get isPlaying;
+  @override
+  int get currentAyahIndex;
+  @override
+  Duration? get currentPosition;
+  @override
+  Duration? get totalDuration;
+  @override
+  double get playbackSpeed;
+  @override
+  double get volume;
   @override
   @JsonKey(ignore: true)
   _$$QuranDetailStateImplCopyWith<_$QuranDetailStateImpl> get copyWith =>
