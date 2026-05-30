@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:read_quran/core/extensions/context_extensions.dart';
 import 'package:read_quran/shared/domain/entities/quran/surah_entity.dart';
-import 'package:read_quran/utils/extensions/theme_context_extension.dart';
 
 class SurahCard extends StatelessWidget {
   const SurahCard({

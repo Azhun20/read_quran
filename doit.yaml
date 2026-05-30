@@ -1,0 +1,20 @@
+i want to make planning build the apps with following name read quran and with following Required Functionality:
+Search: Allow users to search for songs by title or artist.
+Playback Control: Implement standard playback functions: play, pause, resume.
+Progress Display: Show the song's total duration and current playback position using a progress bar.
+Seeking: Enable users to navigate through the song using a slider.
+
+for api Quran Documentation u can see in this link: https://alquran.cloud/ 
+for the github link: https://github.com/islamic-network
+
+i want u to make this apps is focusing on the feature required and make sure all the feature is looks so clear and work properly well.
+please rules this project following clean architecture and state management using flutter bloc cubit.
+make widget reusable and work properly well because in the end of the development we want to make widget test for it(for this waiting my command).
+u can see the example about create a datasource, model, repo, usecase until can call in the cubit u can see in the auth feature.
+make sure create feature forlder if u want to create a feature, u can use run fvm dart generator.dart
+
+Before u start create issue on the github first and tell what u want to do
+Make the plan with easily to understand for junior programmer or cheapeast AI model. 
+
+
+

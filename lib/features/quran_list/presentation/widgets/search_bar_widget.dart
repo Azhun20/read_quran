@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:read_quran/utils/extensions/theme_context_extension.dart';
+import 'package:read_quran/core/extensions/context_extensions.dart';
 
 class SearchBarWidget extends StatelessWidget {
-  const SearchBarWidget({
-    super.key,
-    required this.onChanged,
-  });
+  const SearchBarWidget({super.key, required this.onChanged});
 
   final ValueChanged<String> onChanged;
 

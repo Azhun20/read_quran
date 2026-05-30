@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Route;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:read_quran/configs/routes/route.dart';
@@ -10,7 +10,8 @@ import 'package:read_quran/features/quran_list/presentation/views/quran_list_pag
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: Route.quranList, // Changed to start with quranList for testing
+    initialLocation:
+        Route.quranList, // Changed to start with quranList for testing
     routes: [
       GoRoute(
         path: Route.login,

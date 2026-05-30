@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Route;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:read_quran/configs/routes/route.dart';
+import 'package:read_quran/core/extensions/context_extensions.dart';
 import 'package:read_quran/shared/domain/entities/quran/surah_entity.dart';
-import 'package:read_quran/utils/extensions/theme_context_extension.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../cubit/quran_list_cubit.dart';
@@ -126,10 +126,7 @@ class _QuranListPageState extends State<QuranListPage> {
     final state = context.read<QuranListCubit>().state;
     context.push(
       '${Route.quranDetail}/${surah.number}',
-      extra: {
-        'surah': surah,
-        'reciter': state.selectedReciter,
-      },
+      extra: {'surah': surah, 'reciter': state.selectedReciter},
     );
   }
 
@@ -169,10 +166,7 @@ class _QuranListPageState extends State<QuranListPage> {
               color: context.colorScheme.error,
             ),
             const SizedBox(height: 16),
-            Text(
-              'Failed to load Surahs',
-              style: context.textTheme.titleLarge,
-            ),
+            Text('Failed to load Surahs', style: context.textTheme.titleLarge),
             const SizedBox(height: 8),
             Text(
               message,
@@ -206,10 +200,7 @@ class _QuranListPageState extends State<QuranListPage> {
             color: context.colorScheme.onSurface.withOpacity(0.3),
           ),
           const SizedBox(height: 16),
-          Text(
-            'No Surahs Found',
-            style: context.textTheme.titleLarge,
-          ),
+          Text('No Surahs Found', style: context.textTheme.titleLarge),
           const SizedBox(height: 8),
           Text(
             'Try searching with a different keyword',

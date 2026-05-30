@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
       body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state.isAuthenticated) {
-            context.go(Routes.dashboard);
+            context.go(Route.dashboard);
           }
           if (state.errorMessage != null) {
             context.showErrorSnackBar(state.errorMessage!);
