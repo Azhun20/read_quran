@@ -17,4 +17,7 @@ class HiveConstant {
   static const String surahListTimestampKey = 'surah_list_timestamp';
   static const String recitersKey = 'reciters';
   static const String recitersTimestampKey = 'reciters_timestamp';
+
+  // Playback State Keys
+  static const String playbackStateKey = 'playback_state';
 }
