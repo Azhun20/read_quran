@@ -1,5 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:read_quran/core/di/service_locator.dart';
 import 'package:read_quran/core/logging/app_logger.dart';
+import 'package:read_quran/shared/services/connectivity_service.dart';
+import 'package:read_quran/utils/interceptors/error_interceptor.dart';
 import 'package:read_quran/utils/services/hive_service.dart';
 
 /// Service for making API requests with automatic token handling
@@ -14,7 +17,7 @@ class ApiService {
       BaseOptions(
         baseUrl: const String.fromEnvironment(
           'API_BASE_URL',
-          defaultValue: 'https://api.example.com/v1',
+          defaultValue: 'https://api.alquran.cloud/v1',
         ),
         connectTimeout: const Duration(seconds: 30),
         receiveTimeout: const Duration(seconds: 30),
@@ -25,6 +28,12 @@ class ApiService {
       ),
     );
 
+    // Add error handling interceptor with retry logic
+    _dio.interceptors.add(
+      ErrorInterceptor(connectivityService: sl<ConnectivityService>()),
+    );
+
+    // Add auth interceptor
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
@@ -41,10 +50,6 @@ class ApiService {
             // Handle unauthorized
             _unauthorizedHandler?.call();
           }
-          AppLogger.error(
-            'API Error: ${error.response?.statusCode}',
-            error.message,
-          );
           return handler.next(error);
         },
       ),

@@ -3,6 +3,8 @@ import 'package:read_quran/features/auth/di/auth_di.dart';
 import 'package:read_quran/features/quran_list/di/quran_list_di.dart';
 import 'package:read_quran/features/quran_detail/di/quran_detail_di.dart';
 import 'package:read_quran/features/quran_search/di/quran_search_di.dart';
+import 'package:read_quran/shared/services/audio_player_service.dart';
+import 'package:read_quran/shared/services/connectivity_service.dart';
 import 'package:read_quran/utils/services/api_service.dart';
 import 'package:read_quran/utils/services/hive_service.dart';
 
@@ -18,6 +20,8 @@ Future<void> setupServiceLocator() async {
   // Register core services
   sl.registerLazySingleton<HiveService>(() => HiveService());
   sl.registerLazySingleton<ApiService>(() => ApiService(sl<HiveService>()));
+  sl.registerLazySingleton<ConnectivityService>(() => ConnectivityService());
+  sl.registerLazySingleton<AudioPlayerService>(() => AudioPlayerService());
 
   // Initialize Hive
   await sl<HiveService>().initHive();
