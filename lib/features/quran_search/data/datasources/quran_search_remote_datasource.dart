@@ -33,12 +33,15 @@ class QuranSearchRemoteDataSourceImpl implements QuranSearchRemoteDataSource {
       final surah = surahNumber?.toString() ?? 'all';
       final editionParam = edition ?? 'quran-simple'; // Default edition for search
 
+      // URL encode the keyword for Arabic characters
+      final encodedKeyword = Uri.encodeComponent(keyword);
+
       final endpoint = ApiConstant.searchQuran
-          .replaceAll('{keyword}', keyword)
+          .replaceAll('{keyword}', encodedKeyword)
           .replaceAll('{surah}', surah)
           .replaceAll('{edition}', editionParam);
 
-      AppLogger.info('Searching Quran: $endpoint', 'QuranSearchRemoteDataSource');
+      AppLogger.info('Searching Quran: $endpoint (keyword: $keyword)', 'QuranSearchRemoteDataSource');
 
       final response = await _dio.get(endpoint);
 

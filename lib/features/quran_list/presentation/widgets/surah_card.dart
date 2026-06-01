@@ -3,11 +3,7 @@ import 'package:read_quran/core/extensions/context_extensions.dart';
 import 'package:read_quran/shared/domain/entities/quran/surah_entity.dart';
 
 class SurahCard extends StatelessWidget {
-  const SurahCard({
-    super.key,
-    required this.surah,
-    required this.onTap,
-  });
+  const SurahCard({super.key, required this.surah, required this.onTap});
 
   final SurahEntity surah;
   final VoidCallback onTap;
@@ -90,7 +86,9 @@ class SurahCard extends StatelessWidget {
                         child: Text(
                           surah.englishNameTranslation ?? '',
                           style: context.textTheme.bodyMedium?.copyWith(
-                            color: context.colorScheme.onSurface.withOpacity(0.7),
+                            color: context.colorScheme.onSurface.withOpacity(
+                              0.7,
+                            ),
                           ),
                         ),
                       ),

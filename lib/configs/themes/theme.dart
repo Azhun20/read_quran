@@ -11,30 +11,71 @@ class AppTheme {
       fontFamily: 'Montserrat',
       colorScheme: ColorScheme.fromSeed(
         seedColor: ColorStyle.primary500,
-        primary: ColorStyle.primary500,
+        primary: ColorStyle.primary900,
         secondary: ColorStyle.secondary500,
+        surface: ColorStyle.neutral0,
+        onPrimary: ColorStyle.secondary500,
+        onSecondary: ColorStyle.primary900,
       ),
-      scaffoldBackgroundColor: ColorStyle.neutral0,
+      scaffoldBackgroundColor: const Color(0XFFfff8ee),
       appBarTheme: const AppBarTheme(
-        centerTitle: true,
+        centerTitle: false,
         elevation: 0,
-        backgroundColor: ColorStyle.white,
-        foregroundColor: ColorStyle.neutral900,
-        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        backgroundColor: ColorStyle.primary900,
+        foregroundColor: ColorStyle.secondary500,
+        iconTheme: IconThemeData(color: ColorStyle.secondary500),
+        titleTextStyle: TextStyle(
+          color: ColorStyle.secondary500,
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          fontFamily: 'Montserrat',
+        ),
+        systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: ColorStyle.primary500,
+          backgroundColor: ColorStyle.primary900,
           foregroundColor: ColorStyle.white,
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
       ),
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+        backgroundColor: ColorStyle.secondary500,
+        foregroundColor: ColorStyle.primary900,
+      ),
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        backgroundColor: ColorStyle.primary900,
+        selectedItemColor: ColorStyle.secondary500,
+        unselectedItemColor: ColorStyle.primary300,
+        type: BottomNavigationBarType.fixed,
+        elevation: 8,
+      ),
+      cardTheme: CardThemeData(
+        color: ColorStyle.neutral0,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+          side: const BorderSide(color: ColorStyle.neutral40),
+        ),
+      ),
       inputDecorationTheme: InputDecorationTheme(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(color: ColorStyle.neutral40),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(color: ColorStyle.neutral40),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(color: ColorStyle.primary900, width: 2),
+        ),
         filled: true,
         fillColor: ColorStyle.neutral0,
       ),
+      iconTheme: const IconThemeData(color: ColorStyle.primary900),
     );
   }
 }

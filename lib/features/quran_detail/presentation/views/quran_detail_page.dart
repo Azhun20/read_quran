@@ -58,14 +58,14 @@ class _QuranDetailPageState extends State<QuranDetailPage> {
       listenWhen: (previous, current) =>
           previous.currentAyahIndex != current.currentAyahIndex,
       listener: (context, state) {
-        if (state.isPlaying) {
+        // Scroll when playing OR when resetting to ayah 1 (index 0)
+        if (state.isPlaying || state.currentAyahIndex == 0) {
           _scrollToIndex(state.currentAyahIndex);
         }
       },
       child: BlocBuilder<QuranDetailCubit, QuranDetailState>(
         builder: (context, state) {
           return Scaffold(
-            backgroundColor: context.colorScheme.surface,
             appBar: AppBar(
               titleSpacing: 0,
               centerTitle: false,
@@ -77,12 +77,15 @@ class _QuranDetailPageState extends State<QuranDetailPage> {
                     state.surah?.englishName ?? 'Loading...',
                     style: context.textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.bold,
+                      color: context.colorScheme.secondary,
                     ),
                   ),
                   if (state.surah != null)
                     Text(
                       '${state.surah!.englishNameTranslation} • ${state.surah!.numberOfAyahs} Ayahs',
-                      style: context.textTheme.bodySmall,
+                      style: context.textTheme.bodySmall?.copyWith(
+                        color: context.colorScheme.secondary,
+                      ),
                     ),
                 ],
               ),
@@ -91,6 +94,7 @@ class _QuranDetailPageState extends State<QuranDetailPage> {
                   state.surah?.name ?? '',
                   style: context.textTheme.headlineMedium?.copyWith(
                     fontFamily: 'Rajdhani',
+                    color: context.colorScheme.secondary,
                   ),
                 ),
                 const SizedBox(width: 16),

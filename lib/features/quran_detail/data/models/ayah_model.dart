@@ -20,6 +20,7 @@ class AyahModel with _$AyahModel {
     @JsonKey(name: 'ruku') int? ruku,
     @JsonKey(name: 'hizbQuarter') int? hizbQuarter,
     @JsonKey(name: 'sajda') dynamic sajda,
+    @JsonKey(name: 'translation') String? translation,
   }) = _AyahModel;
 
   factory AyahModel.fromJson(Map<String, dynamic> json) =>
@@ -37,6 +38,10 @@ class AyahModel with _$AyahModel {
       surahNumber: surahNumber,
       surahName: surahName,
       sajda: sajda is bool ? sajda as bool : false,
+      translation: translation,
+      ruku: ruku,
+      manzil: manzil,
+      hizbQuarter: hizbQuarter,
     );
   }
 }
