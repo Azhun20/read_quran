@@ -19,6 +19,7 @@ class QuranListPage extends StatefulWidget {
 }
 
 class _QuranListPageState extends State<QuranListPage> {
+  final _focusNode = FocusNode();
   @override
   void initState() {
     super.initState();
@@ -29,8 +30,35 @@ class _QuranListPageState extends State<QuranListPage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _focusNode.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Al-Qur'an",
+              style: context.textTheme.headlineSmall?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: context.colorScheme.secondary,
+              ),
+            ),
+            Text(
+              'All 114 Surahs',
+              style: context.textTheme.bodyMedium?.copyWith(
+                color: context.colorScheme.secondary,
+              ),
+            ),
+            const SizedBox(height: 4),
+          ],
+        ),
+      ),
       body: SafeArea(
         child: Column(
           children: [
@@ -41,7 +69,7 @@ class _QuranListPageState extends State<QuranListPage> {
                 color: context.colorScheme.surface,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
+                    color: Colors.black.withValues(alpha: 0.05),
                     blurRadius: 10,
                     offset: const Offset(0, 2),
                   ),
@@ -50,45 +78,9 @@ class _QuranListPageState extends State<QuranListPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Read Quran',
-                              style: context.textTheme.headlineMedium?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: context.colorScheme.onSurface,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              'All 114 Surahs',
-                              style: context.textTheme.bodyMedium?.copyWith(
-                                color: context.colorScheme.onSurface
-                                    .withOpacity(0.7),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          context.push(Route.quranSearch);
-                        },
-                        icon: Icon(
-                          Icons.search,
-                          color: context.colorScheme.primary,
-                        ),
-                        tooltip: 'Search verses',
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
                   // Search bar for filtering surahs
                   SearchBarWidget(
+                    focusNode: _focusNode,
                     onChanged: (query) {
                       context.read<QuranListCubit>().searchSurahs(query);
                     },
