@@ -48,6 +48,16 @@ android {
     buildTypes {
         release {
             signingConfig = signingConfigs.getByName("release")
+
+            // Disable minification for now (can enable later if needed)
+            // isMinifyEnabled = true
+            // isShrinkResources = true
+
+            // Use ProGuard rules
+            // proguardFiles(
+            //     getDefaultProguardFile("proguard-android-optimize.txt"),
+            //     "proguard-rules.pro"
+            // )
         }
     }
 }
