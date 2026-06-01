@@ -6,10 +6,12 @@ class SearchBarWidget extends StatelessWidget {
     super.key,
     required this.onChanged,
     required this.focusNode,
+    required this.textController,
   });
 
   final ValueChanged<String> onChanged;
   final FocusNode focusNode;
+  final TextEditingController textController;
 
   @override
   Widget build(BuildContext context) {
@@ -20,26 +22,42 @@ class SearchBarWidget extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(12),
       ),
-      child: TextField(
-        onTapOutside: (_) => focusNode.unfocus(),
-        onChanged: onChanged,
-        focusNode: focusNode,
-        decoration: InputDecoration(
-          hintText: 'Search by name or number...',
-          hintStyle: context.textTheme.bodyMedium?.copyWith(
-            color: context.colorScheme.onSurface.withValues(alpha: 0.5),
-          ),
-          prefixIcon: Icon(
-            Icons.search,
-            color: context.colorScheme.onSurface.withValues(alpha: 0.5),
-          ),
-          border: InputBorder.none,
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 14,
-          ),
-        ),
-        style: context.textTheme.bodyMedium,
+      child: ValueListenableBuilder(
+        valueListenable: textController,
+        builder: (context, value, child) {
+          return TextField(
+            controller: textController,
+            onTapOutside: (_) => focusNode.unfocus(),
+            onChanged: onChanged,
+            focusNode: focusNode,
+            decoration: InputDecoration(
+              hintText: 'Search by name or number...',
+              hintStyle: context.textTheme.bodyMedium?.copyWith(
+                color: context.colorScheme.onSurface.withValues(alpha: 0.5),
+              ),
+              prefixIcon: Icon(
+                Icons.search,
+                color: context.colorScheme.onSurface.withValues(alpha: 0.5),
+              ),
+              suffixIcon: value.text.isEmpty
+                  ? null
+                  : IconButton(
+                      icon: const Icon(Icons.clear),
+                      onPressed: () {
+                        focusNode.unfocus();
+                        textController.clear();
+                        onChanged('');
+                      },
+                    ),
+              border: InputBorder.none,
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 14,
+              ),
+            ),
+            style: context.textTheme.bodyMedium,
+          );
+        },
       ),
     );
   }

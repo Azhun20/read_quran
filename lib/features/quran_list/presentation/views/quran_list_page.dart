@@ -20,6 +20,8 @@ class QuranListPage extends StatefulWidget {
 
 class _QuranListPageState extends State<QuranListPage> {
   final _focusNode = FocusNode();
+  final _textController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -33,6 +35,7 @@ class _QuranListPageState extends State<QuranListPage> {
   void dispose() {
     super.dispose();
     _focusNode.dispose();
+    _textController.dispose();
   }
 
   @override
@@ -80,6 +83,7 @@ class _QuranListPageState extends State<QuranListPage> {
                 children: [
                   // Search bar for filtering surahs
                   SearchBarWidget(
+                    textController: _textController,
                     focusNode: _focusNode,
                     onChanged: (query) {
                       context.read<QuranListCubit>().searchSurahs(query);
