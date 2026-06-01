@@ -2,23 +2,165 @@ import 'package:flutter/material.dart';
 import 'package:read_quran/shared/styles/color_style.dart';
 import 'package:read_quran/utils/extensions/theme_context_extension.dart';
 
+/// Enum defining the visual style variants for [CustomButtonWidget].
+///
+/// - [filled]: Solid background color with contrasting text (primary CTA)
+/// - [outlined]: Transparent background with colored border (secondary actions)
+/// - [text]: Minimal style with no background or border (tertiary actions)
 enum TButtonType { filled, outlined, text }
 
+/// A highly customizable button widget with multiple style variants.
+///
+/// This widget provides a consistent button interface across the Read Quran app
+/// with support for different visual styles (filled, outlined, text), loading states,
+/// icon placement, and responsive sizing. It handles all button states automatically
+/// including disabled, pressed, and loading.
+///
+/// **Features**:
+/// - **Three Style Variants**: Filled, outlined, and text buttons
+/// - **Loading State**: Shows circular progress indicator
+/// - **Icon Support**: Optional prefix and suffix icons
+/// - **Responsive**: Expanded mode for full-width buttons
+/// - **Accessibility**: Proper disabled state with reduced opacity
+/// - **Material Design**: Ink splash and highlight effects
+/// - **Themeable**: Customizable colors, padding, and text style
+///
+/// **Button Types**:
+/// 1. **Filled** (Primary CTA):
+///    - Solid background color (defaults to primary500)
+///    - White text color
+///    - Used for primary actions like "Save", "Submit"
+///
+/// 2. **Outlined** (Secondary):
+///    - Transparent background
+///    - Colored border (defaults to primary500)
+///    - Colored text (defaults to primary500)
+///    - Used for secondary actions like "Cancel", "Skip"
+///
+/// 3. **Text** (Tertiary):
+///    - No background or border
+///    - Colored text (defaults to primary500)
+///    - Used for low-emphasis actions like "Learn More"
+///
+/// **State Handling**:
+/// - **Disabled**: When onPressed is null
+///   - Reduced opacity (0.6)
+///   - Gray colors
+///   - No interaction
+/// - **Loading**: When isLoading is true
+///   - Shows circular progress indicator
+///   - Disables button interaction
+///   - Hides icon if present
+///
+/// **Usage Examples**:
+/// ```dart
+/// // Filled button (primary action)
+/// CustomButtonWidget.filled(
+///   text: 'Save Changes',
+///   onPressed: () => _saveChanges(),
+/// )
+///
+/// // Outlined button with icon
+/// CustomButtonWidget.outlined(
+///   text: 'Select Reciter',
+///   prefixIcon: Icon(Icons.volume_up),
+///   onPressed: () => _selectReciter(),
+/// )
+///
+/// // Loading state
+/// CustomButtonWidget.filled(
+///   text: 'Submitting...',
+///   isLoading: true,
+/// )
+///
+/// // Full-width button
+/// CustomButtonWidget.filled(
+///   text: 'Continue',
+///   expanded: true,
+///   onPressed: () => _continue(),
+/// )
+///
+/// // Disabled button
+/// CustomButtonWidget.filled(
+///   text: 'Submit',
+///   onPressed: null, // Disabled when null
+/// )
+/// ```
 class CustomButtonWidget extends StatelessWidget {
+  /// The text label displayed on the button.
   final String text;
+
+  /// Callback function executed when the button is pressed.
+  ///
+  /// If null, the button is considered disabled and cannot be interacted with.
   final VoidCallback? onPressed;
+
+  /// The visual style variant of the button.
+  ///
+  /// Determines the button's appearance: filled, outlined, or text.
+  /// Defaults to [TButtonType.filled].
   final TButtonType type;
+
+  /// Custom background color for the button.
+  ///
+  /// Only applies to filled buttons. If null, uses primary500 from ColorStyle.
   final Color? backgroundColor;
+
+  /// Custom text color for the button label.
+  ///
+  /// If null, uses appropriate contrast color based on button type:
+  /// - Filled: white
+  /// - Outlined/Text: primary500
   final Color? textColor;
+
+  /// Custom border color for outlined buttons.
+  ///
+  /// Only applies to outlined buttons. If null, uses primary500 from ColorStyle.
   final Color? borderColor;
+
+  /// Fixed width for the button.
+  ///
+  /// If null, button width is determined by its content or [expanded] parameter.
   final double? width;
+
+  /// Fixed height for the button.
+  ///
+  /// If null, height is determined by padding and content.
   final double? height;
+
+  /// Custom padding inside the button.
+  ///
+  /// Defaults to EdgeInsets.symmetric(horizontal: 16, vertical: 12).
   final EdgeInsetsGeometry? padding;
+
+  /// Custom border radius for the button corners.
+  ///
+  /// Defaults to BorderRadius.circular(8).
   final BorderRadius? borderRadius;
+
+  /// Custom text style for the button label.
+  ///
+  /// If null, uses theme-appropriate text style from context extensions.
   final TextStyle? textStyle;
+
+  /// Optional icon displayed before the text label.
+  ///
+  /// Hidden when [isLoading] is true.
   final Widget? prefixIcon;
+
+  /// Optional icon displayed after the text label.
+  ///
+  /// Hidden when [isLoading] is true.
   final Widget? suffixIcon;
+
+  /// Whether to show a loading indicator instead of the text.
+  ///
+  /// When true, displays a circular progress indicator and disables interaction.
   final bool isLoading;
+
+  /// Whether the button should expand to fill available width.
+  ///
+  /// When true, button takes full width of parent container.
   final bool expanded;
 
   const CustomButtonWidget({
@@ -40,7 +182,25 @@ class CustomButtonWidget extends StatelessWidget {
     this.expanded = false,
   });
 
-  // Factory constructor untuk filled button
+  /// Creates a filled button with solid background color.
+  ///
+  /// This factory constructor creates a primary call-to-action button with
+  /// solid background and contrasting text. Use for the most important
+  /// action on a screen.
+  ///
+  /// **Default Styling**:
+  /// - Background: primary500 color
+  /// - Text: White
+  /// - Type: TButtonType.filled
+  ///
+  /// **Example**:
+  /// ```dart
+  /// CustomButtonWidget.filled(
+  ///   text: 'Continue',
+  ///   onPressed: () => _handleContinue(),
+  ///   prefixIcon: Icon(Icons.arrow_forward),
+  /// )
+  /// ```
   factory CustomButtonWidget.filled({
     Key? key,
     required String text,
@@ -75,7 +235,25 @@ class CustomButtonWidget extends StatelessWidget {
     );
   }
 
-  // Factory constructor untuk outlined button
+  /// Creates an outlined button with transparent background and colored border.
+  ///
+  /// This factory constructor creates a secondary action button with a border
+  /// and no background fill. Use for secondary actions that need less emphasis
+  /// than primary buttons.
+  ///
+  /// **Default Styling**:
+  /// - Background: Transparent
+  /// - Border: primary500 color
+  /// - Text: primary500 color
+  /// - Type: TButtonType.outlined
+  ///
+  /// **Example**:
+  /// ```dart
+  /// CustomButtonWidget.outlined(
+  ///   text: 'Cancel',
+  ///   onPressed: () => Navigator.pop(context),
+  /// )
+  /// ```
   factory CustomButtonWidget.outlined({
     Key? key,
     required String text,
@@ -113,7 +291,24 @@ class CustomButtonWidget extends StatelessWidget {
     );
   }
 
-  // Factory constructor untuk text button
+  /// Creates a minimal text-only button with no background or border.
+  ///
+  /// This factory constructor creates a tertiary action button with minimal
+  /// visual weight. Use for low-emphasis actions or inline links.
+  ///
+  /// **Default Styling**:
+  /// - Background: None
+  /// - Border: None
+  /// - Text: primary500 color
+  /// - Type: TButtonType.text
+  ///
+  /// **Example**:
+  /// ```dart
+  /// CustomButtonWidget.text(
+  ///   text: 'Learn More',
+  ///   onPressed: () => _showInfoDialog(),
+  /// )
+  /// ```
   factory CustomButtonWidget.text({
     Key? key,
     required String text,
