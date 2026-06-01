@@ -4,6 +4,7 @@ import 'package:read_quran/app/router/app_router.dart';
 import 'package:read_quran/configs/themes/theme.dart';
 import 'package:read_quran/core/di/service_locator.dart';
 import 'package:read_quran/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:read_quran/shared/widgets/network_status_banner.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,6 +32,11 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: AppTheme.light(),
         routerConfig: AppRouter.router,
+        builder: (context, child) {
+          return NetworkStatusBanner(
+            child: child ?? const SizedBox.shrink(),
+          );
+        },
       ),
     );
   }

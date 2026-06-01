@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:read_quran/constants/api_constant.dart';
+import 'package:read_quran/core/di/service_locator.dart';
 import 'package:read_quran/core/logging/app_logger.dart';
+import 'package:read_quran/utils/services/api_service.dart';
 
 /// Abstract class for QuranDetail remote data source
 abstract class QuranDetailRemoteDataSource {
@@ -15,15 +17,8 @@ class QuranDetailRemoteDataSourceImpl
     implements QuranDetailRemoteDataSource {
   QuranDetailRemoteDataSourceImpl();
 
-  // Create a separate Dio instance for AlQuran API
-  final Dio _dio = Dio(BaseOptions(
-    baseUrl: ApiConstant.alquranBaseUrl,
-    connectTimeout: const Duration(seconds: 30),
-    receiveTimeout: const Duration(seconds: 30),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  ));
+  // Use global Dio instance from ApiService
+  Dio get _dio => sl<ApiService>().dio;
 
   @override
   Future<Map<String, dynamic>> getSurahDetail({

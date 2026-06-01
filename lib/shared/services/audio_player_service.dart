@@ -16,6 +16,10 @@ class AudioPlayerService {
   int _currentIndex = 0;
   final StreamController<int> _currentIndexController =
       StreamController<int>.broadcast();
+  final StreamController<String?> _errorController =
+      StreamController<String?>.broadcast();
+  final StreamController<bool> _bufferingController =
+      StreamController<bool>.broadcast();
 
   // Streams
   Stream<Duration> get positionStream => _player.positionStream;
@@ -25,6 +29,8 @@ class AudioPlayerService {
   Stream<ProcessingState> get processingStateStream =>
       _player.processingStateStream;
   Stream<int> get currentIndexStream => _currentIndexController.stream;
+  Stream<String?> get errorStream => _errorController.stream;
+  Stream<bool> get bufferingStream => _bufferingController.stream;
 
   // Getters
   AudioPlayer get player => _player;
@@ -40,9 +46,19 @@ class AudioPlayerService {
   void _init() {
     // Listen to player state changes
     _player.playerStateStream.listen((state) {
+      // Handle playback completion
       if (state.processingState == ProcessingState.completed) {
         AppLogger.info('Audio playback completed');
         playNext();
+      }
+
+      // Handle buffering
+      final isBuffering = state.processingState == ProcessingState.buffering ||
+          state.processingState == ProcessingState.loading;
+      _bufferingController.add(isBuffering);
+
+      if (isBuffering) {
+        AppLogger.info('Audio buffering...');
       }
     });
   }
@@ -57,20 +73,42 @@ class AudioPlayerService {
 
       if (ayahs.isEmpty) {
         AppLogger.warning('Attempted to load empty playlist');
+        _errorController.add('No ayahs to play');
         return;
       }
 
       final firstAyah = ayahs[startIndex];
       if (firstAyah.audioUrl == null || firstAyah.audioUrl!.isEmpty) {
         AppLogger.error('No audio URL for ayah', firstAyah.number);
+        _errorController.add('Audio not available for this ayah');
         return;
       }
 
-      await _player.setUrl(firstAyah.audioUrl!);
+      await _setAudioUrl(firstAyah.audioUrl!);
       AppLogger.info('Loaded playlist with ${ayahs.length} ayahs');
+      _errorController.add(null); // Clear any previous errors
     } catch (e, stackTrace) {
       AppLogger.error('Failed to load playlist', e, stackTrace);
+      _errorController.add('Failed to load audio. Please check your connection.');
       rethrow;
+    }
+  }
+
+  /// Set audio URL with retry logic
+  Future<void> _setAudioUrl(String url, {int retryCount = 0}) async {
+    const maxRetries = 3;
+    try {
+      await _player.setUrl(url);
+    } catch (e) {
+      if (retryCount < maxRetries) {
+        AppLogger.warning('Failed to load audio, retrying... (${retryCount + 1}/$maxRetries)');
+        await Future.delayed(Duration(seconds: retryCount + 1));
+        return _setAudioUrl(url, retryCount: retryCount + 1);
+      } else {
+        AppLogger.error('Failed to load audio after $maxRetries retries', e);
+        _errorController.add('Failed to load audio. Please check your connection.');
+        rethrow;
+      }
     }
   }
 
@@ -79,8 +117,10 @@ class AudioPlayerService {
     try {
       await _player.play();
       AppLogger.info('Playing ayah ${_currentIndex + 1}');
+      _errorController.add(null); // Clear any previous errors
     } catch (e, stackTrace) {
       AppLogger.error('Failed to play audio', e, stackTrace);
+      _errorController.add('Failed to play audio. Please try again.');
       rethrow;
     }
   }
@@ -117,11 +157,12 @@ class AudioPlayerService {
 
       if (nextAyah.audioUrl != null && nextAyah.audioUrl!.isNotEmpty) {
         try {
-          await _player.setUrl(nextAyah.audioUrl!);
+          await _setAudioUrl(nextAyah.audioUrl!);
           await play();
           AppLogger.info('Playing next ayah: ${_currentIndex + 1}');
         } catch (e, stackTrace) {
           AppLogger.error('Failed to play next ayah', e, stackTrace);
+          _errorController.add('Failed to play next ayah. Please check your connection.');
         }
       }
     } else {
@@ -131,11 +172,12 @@ class AudioPlayerService {
       final firstAyah = _playlist![0];
       if (firstAyah.audioUrl != null && firstAyah.audioUrl!.isNotEmpty) {
         try {
-          await _player.setUrl(firstAyah.audioUrl!);
+          await _setAudioUrl(firstAyah.audioUrl!);
           await _player.pause();
           await _player.seek(Duration.zero);
         } catch (e, stackTrace) {
           AppLogger.error('Failed to reset to first ayah', e, stackTrace);
+          _errorController.add('Failed to reset audio.');
         }
       }
       AppLogger.info('Reached end of playlist, reset to first ayah');
@@ -153,11 +195,12 @@ class AudioPlayerService {
 
       if (prevAyah.audioUrl != null && prevAyah.audioUrl!.isNotEmpty) {
         try {
-          await _player.setUrl(prevAyah.audioUrl!);
+          await _setAudioUrl(prevAyah.audioUrl!);
           await play();
           AppLogger.info('Playing previous ayah: ${_currentIndex + 1}');
         } catch (e, stackTrace) {
           AppLogger.error('Failed to play previous ayah', e, stackTrace);
+          _errorController.add('Failed to play previous ayah. Please check your connection.');
         }
       }
     } else {
@@ -199,6 +242,7 @@ class AudioPlayerService {
   Future<void> playAyahAt(int index) async {
     if (_playlist == null || index < 0 || index >= _playlist!.length) {
       AppLogger.warning('Invalid ayah index: $index');
+      _errorController.add('Invalid ayah selection');
       return;
     }
 
@@ -208,11 +252,12 @@ class AudioPlayerService {
 
     if (ayah.audioUrl != null && ayah.audioUrl!.isNotEmpty) {
       try {
-        await _player.setUrl(ayah.audioUrl!);
+        await _setAudioUrl(ayah.audioUrl!);
         await play();
         AppLogger.info('Playing ayah at index: $index');
       } catch (e, stackTrace) {
         AppLogger.error('Failed to play ayah at index', e, stackTrace);
+        _errorController.add('Failed to play ayah. Please check your connection.');
       }
     }
   }
@@ -221,6 +266,8 @@ class AudioPlayerService {
   Future<void> dispose() async {
     try {
       await _currentIndexController.close();
+      await _errorController.close();
+      await _bufferingController.close();
       await _player.dispose();
       _playlist = null;
       AppLogger.info('Audio player disposed');

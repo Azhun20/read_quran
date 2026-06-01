@@ -44,7 +44,7 @@ class UnexpectedFailure extends Failure {
   });
 }
 
-const _defaultFailureMessage = 'Terjadi Kesalahan';
+const _defaultFailureMessage = 'Something went wrong. Please try again.';
 
 /// Convert known exceptions into strongly typed [Failure] instances.
 Failure mapExceptionToFailure(Object error, [StackTrace? stackTrace]) {
@@ -62,7 +62,7 @@ Failure mapExceptionToFailure(Object error, [StackTrace? stackTrace]) {
 
   if (error is SocketException) {
     return ServerFailure(
-      message: 'Tidak ada koneksi internet',
+      message: 'No internet connection. Please check your network and try again.',
       cause: error,
       stackTrace: stackTrace,
     );
@@ -76,8 +76,9 @@ Failure mapExceptionToFailure(Object error, [StackTrace? stackTrace]) {
     );
   }
 
+  // Return user-friendly message for unexpected errors
   return UnexpectedFailure(
-    message: error.toString(),
+    message: 'Something went wrong. Please try again.',
     cause: error,
     stackTrace: stackTrace,
   );
@@ -97,5 +98,47 @@ String? _extractDioMessage(DioException exception) {
     return errors.toString();
   }
 
-  return exception.message;
+  // Return user-friendly messages based on error type
+  switch (exception.type) {
+    case DioExceptionType.connectionTimeout:
+    case DioExceptionType.sendTimeout:
+    case DioExceptionType.receiveTimeout:
+      return 'Connection timeout. Please check your internet and try again.';
+
+    case DioExceptionType.badResponse:
+      final statusCode = exception.response?.statusCode;
+      switch (statusCode) {
+        case 400:
+          return 'Invalid request. Please try again.';
+        case 401:
+          return 'Unauthorized. Please login again.';
+        case 403:
+          return 'Access forbidden.';
+        case 404:
+          return 'Data not found. Please try again.';
+        case 500:
+        case 502:
+        case 503:
+          return 'Server is having issues. Please try again later.';
+        case 504:
+          return 'Server timeout. Please try again.';
+        default:
+          return 'Something went wrong. Please try again.';
+      }
+
+    case DioExceptionType.cancel:
+      return 'Request cancelled.';
+
+    case DioExceptionType.connectionError:
+      return 'No internet connection. Please check your network and try again.';
+
+    case DioExceptionType.badCertificate:
+      return 'Security error. Please try again later.';
+
+    case DioExceptionType.unknown:
+      if (exception.error is SocketException) {
+        return 'No internet connection. Please check your network and try again.';
+      }
+      return 'Connection failed. Please check your internet and try again.';
+  }
 }

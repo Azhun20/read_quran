@@ -204,27 +204,36 @@ class _QuranSearchPageState extends State<QuranSearchPage> {
 
                     // Results list
                     Expanded(
-                      child: ListView.builder(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        itemCount: state.searchResults.length,
-                        itemBuilder: (context, index) {
-                          final ayah = state.searchResults[index];
-                          return SearchResultCard(
-                            ayah: ayah,
-                            searchKeyword: state.searchKeyword,
-                            onTap: () {
-                              // Navigate to detail page
-                              if (ayah.surahNumber != null) {
-                                context.pushNamed(
-                                  Route.quranDetail,
-                                  pathParameters: {
-                                    'surahNumber': ayah.surahNumber.toString(),
-                                  },
+                      child: RefreshIndicator(
+                        onRefresh: () async {
+                          if (state.searchKeyword.isNotEmpty) {
+                            await context.read<QuranSearchCubit>().searchQuran(
+                                  keyword: state.searchKeyword,
                                 );
-                              }
-                            },
-                          );
+                          }
                         },
+                        child: ListView.builder(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          itemCount: state.searchResults.length,
+                          itemBuilder: (context, index) {
+                            final ayah = state.searchResults[index];
+                            return SearchResultCard(
+                              ayah: ayah,
+                              searchKeyword: state.searchKeyword,
+                              onTap: () {
+                                // Navigate to detail page
+                                if (ayah.surahNumber != null) {
+                                  context.pushNamed(
+                                    Route.quranDetail,
+                                    pathParameters: {
+                                      'surahNumber': ayah.surahNumber.toString(),
+                                    },
+                                  );
+                                }
+                              },
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ],

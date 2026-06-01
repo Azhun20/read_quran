@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:read_quran/constants/api_constant.dart';
+import 'package:read_quran/core/di/service_locator.dart';
 import 'package:read_quran/core/logging/app_logger.dart';
+import 'package:read_quran/utils/services/api_service.dart';
 
 abstract class QuranSearchRemoteDataSource {
   Future<Map<String, dynamic>> searchQuran({
@@ -11,17 +13,10 @@ abstract class QuranSearchRemoteDataSource {
 }
 
 class QuranSearchRemoteDataSourceImpl implements QuranSearchRemoteDataSource {
-  QuranSearchRemoteDataSourceImpl() {
-    _dio = Dio(
-      BaseOptions(
-        baseUrl: ApiConstant.alquranBaseUrl,
-        connectTimeout: const Duration(seconds: 30),
-        receiveTimeout: const Duration(seconds: 30),
-      ),
-    );
-  }
+  QuranSearchRemoteDataSourceImpl();
 
-  late final Dio _dio;
+  // Use global Dio instance from ApiService
+  Dio get _dio => sl<ApiService>().dio;
 
   @override
   Future<Map<String, dynamic>> searchQuran({
