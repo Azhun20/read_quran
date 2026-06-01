@@ -3,27 +3,27 @@ import 'package:flutter/material.dart';
 class ColorStyle {
   ColorStyle._();
 
-  static const Color primary50 = Color(0xffe6f0ff);
-  static const Color primary100 = Color(0xffb0cfff);
-  static const Color primary200 = Color(0xff8ab8ff);
-  static const Color primary300 = Color(0xff5498ff);
-  static const Color primary400 = Color(0xff3384ff);
-  static const Color primary500 = Color(0xff0065ff);
-  static const Color primary600 = Color(0xff005ce8);
-  static const Color primary700 = Color(0xff0048b5);
-  static const Color primary800 = Color(0xff00388c);
-  static const Color primary900 = Color(0xff002a6b);
+  static const Color primary50 = Color(0xffecfbf4);
+  static const Color primary100 = Color(0xffd9f7eb);
+  static const Color primary200 = Color(0xffb3ecd3);
+  static const Color primary300 = Color(0xff8de0bb);
+  static const Color primary400 = Color(0xff67d4a3);
+  static const Color primary500 = Color(0xff41c68a);
+  static const Color primary600 = Color(0xff37a874);
+  static const Color primary700 = Color(0xff2d8a5e);
+  static const Color primary800 = Color(0xff236346);
+  static const Color primary900 = Color(0xff1a3d2e);
 
-  static const Color secondary50 = Color(0xfffee7eb);
-  static const Color secondary100 = Color(0xfffdb5c2);
-  static const Color secondary200 = Color(0xfffc91a4);
-  static const Color secondary300 = Color(0xfffa5e7b);
-  static const Color secondary400 = Color(0xfff93f61);
-  static const Color secondary500 = Color(0xfff80f3a);
-  static const Color secondary600 = Color(0xffe20e35);
-  static const Color secondary700 = Color(0xffb00b29);
-  static const Color secondary800 = Color(0xff880820);
-  static const Color secondary900 = Color(0xff680618);
+  static const Color secondary50 = Color(0xfffdf8ed);
+  static const Color secondary100 = Color(0xfffaeed3);
+  static const Color secondary200 = Color(0xfff5dda6);
+  static const Color secondary300 = Color(0xfff0cd79);
+  static const Color secondary400 = Color(0xffebbc4d);
+  static const Color secondary500 = Color(0xffc9a84c);
+  static const Color secondary600 = Color(0xffb69143);
+  static const Color secondary700 = Color(0xff8f7235);
+  static const Color secondary800 = Color(0xff6f5828);
+  static const Color secondary900 = Color(0xff4f3e1c);
 
   static const Color tertiary50 = Color(0xfffffeec);
   static const Color tertiary100 = Color(0xfffffcc5);

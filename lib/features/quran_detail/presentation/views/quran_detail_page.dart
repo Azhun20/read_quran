@@ -23,6 +23,7 @@ class QuranDetailPage extends StatefulWidget {
 
 class _QuranDetailPageState extends State<QuranDetailPage> {
   final Map<int, GlobalKey> _itemKeys = {};
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -35,11 +36,28 @@ class _QuranDetailPageState extends State<QuranDetailPage> {
     });
   }
 
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   GlobalKey _keyForIndex(int index) {
     return _itemKeys.putIfAbsent(index, () => GlobalKey());
   }
 
   void _scrollToIndex(int index) {
+    // For index 0 (first ayah), scroll to top using controller
+    if (index == 0) {
+      _scrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.easeInOut,
+      );
+      return;
+    }
+
+    // For other indices, try to use ensureVisible
     final key = _itemKeys[index];
     final ctx = key?.currentContext;
     if (ctx == null) return;
@@ -58,14 +76,14 @@ class _QuranDetailPageState extends State<QuranDetailPage> {
       listenWhen: (previous, current) =>
           previous.currentAyahIndex != current.currentAyahIndex,
       listener: (context, state) {
-        if (state.isPlaying) {
+        // Scroll when playing OR when resetting to ayah 1 (index 0)
+        if (state.isPlaying || state.currentAyahIndex == 0) {
           _scrollToIndex(state.currentAyahIndex);
         }
       },
       child: BlocBuilder<QuranDetailCubit, QuranDetailState>(
         builder: (context, state) {
           return Scaffold(
-            backgroundColor: context.colorScheme.surface,
             appBar: AppBar(
               titleSpacing: 0,
               centerTitle: false,
@@ -77,12 +95,15 @@ class _QuranDetailPageState extends State<QuranDetailPage> {
                     state.surah?.englishName ?? 'Loading...',
                     style: context.textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.bold,
+                      color: context.colorScheme.secondary,
                     ),
                   ),
                   if (state.surah != null)
                     Text(
                       '${state.surah!.englishNameTranslation} • ${state.surah!.numberOfAyahs} Ayahs',
-                      style: context.textTheme.bodySmall,
+                      style: context.textTheme.bodySmall?.copyWith(
+                        color: context.colorScheme.secondary,
+                      ),
                     ),
                 ],
               ),
@@ -91,6 +112,7 @@ class _QuranDetailPageState extends State<QuranDetailPage> {
                   state.surah?.name ?? '',
                   style: context.textTheme.headlineMedium?.copyWith(
                     fontFamily: 'Rajdhani',
+                    color: context.colorScheme.secondary,
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -105,6 +127,7 @@ class _QuranDetailPageState extends State<QuranDetailPage> {
                       : state.errorMessage != null
                       ? _buildErrorWidget(state.errorMessage!)
                       : ListView.builder(
+                          controller: _scrollController,
                           padding: const EdgeInsets.only(bottom: 100),
                           itemCount: state.ayahs.length,
                           itemBuilder: (context, index) {

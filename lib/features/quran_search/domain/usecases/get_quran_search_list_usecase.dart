@@ -1,13 +1,22 @@
-import '../repositories/quran_search_repository.dart';
+import 'package:dartz/dartz.dart';
+import 'package:read_quran/core/error/failure.dart';
+import 'package:read_quran/features/quran_search/domain/repositories/quran_search_repository.dart';
+import 'package:read_quran/shared/domain/entities/quran/ayah_entity.dart';
 
-/// Use case template untuk mengambil data QuranSearch.
-/// Implementasikan logika bisnis sesuai kebutuhan.
-class GetQuranSearchListUseCase {
-  GetQuranSearchListUseCase(this._repository);
+class SearchQuranUseCase {
+  SearchQuranUseCase(this._repository);
 
   final QuranSearchRepository _repository;
 
-  Future<void> call() async {
-    // TODO: panggil method repository dan olah hasilnya.
+  Future<Either<Failure, List<AyahEntity>>> call({
+    required String keyword,
+    int? surahNumber,
+    String? edition,
+  }) async {
+    return await _repository.searchQuran(
+      keyword: keyword,
+      surahNumber: surahNumber,
+      edition: edition,
+    );
   }
 }

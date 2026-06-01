@@ -42,6 +42,8 @@ mixin _$AyahModel {
   int? get hizbQuarter => throw _privateConstructorUsedError;
   @JsonKey(name: 'sajda')
   dynamic get sajda => throw _privateConstructorUsedError;
+  @JsonKey(name: 'translation')
+  String? get translation => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -65,7 +67,8 @@ abstract class $AyahModelCopyWith<$Res> {
       @JsonKey(name: 'page') int? page,
       @JsonKey(name: 'ruku') int? ruku,
       @JsonKey(name: 'hizbQuarter') int? hizbQuarter,
-      @JsonKey(name: 'sajda') dynamic sajda});
+      @JsonKey(name: 'sajda') dynamic sajda,
+      @JsonKey(name: 'translation') String? translation});
 }
 
 /// @nodoc
@@ -92,6 +95,7 @@ class _$AyahModelCopyWithImpl<$Res, $Val extends AyahModel>
     Object? ruku = freezed,
     Object? hizbQuarter = freezed,
     Object? sajda = freezed,
+    Object? translation = freezed,
   }) {
     return _then(_value.copyWith(
       number: freezed == number
@@ -138,6 +142,10 @@ class _$AyahModelCopyWithImpl<$Res, $Val extends AyahModel>
           ? _value.sajda
           : sajda // ignore: cast_nullable_to_non_nullable
               as dynamic,
+      translation: freezed == translation
+          ? _value.translation
+          : translation // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -161,7 +169,8 @@ abstract class _$$AyahModelImplCopyWith<$Res>
       @JsonKey(name: 'page') int? page,
       @JsonKey(name: 'ruku') int? ruku,
       @JsonKey(name: 'hizbQuarter') int? hizbQuarter,
-      @JsonKey(name: 'sajda') dynamic sajda});
+      @JsonKey(name: 'sajda') dynamic sajda,
+      @JsonKey(name: 'translation') String? translation});
 }
 
 /// @nodoc
@@ -186,6 +195,7 @@ class __$$AyahModelImplCopyWithImpl<$Res>
     Object? ruku = freezed,
     Object? hizbQuarter = freezed,
     Object? sajda = freezed,
+    Object? translation = freezed,
   }) {
     return _then(_$AyahModelImpl(
       number: freezed == number
@@ -232,6 +242,10 @@ class __$$AyahModelImplCopyWithImpl<$Res>
           ? _value.sajda
           : sajda // ignore: cast_nullable_to_non_nullable
               as dynamic,
+      translation: freezed == translation
+          ? _value.translation
+          : translation // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -250,7 +264,8 @@ class _$AyahModelImpl extends _AyahModel {
       @JsonKey(name: 'page') this.page,
       @JsonKey(name: 'ruku') this.ruku,
       @JsonKey(name: 'hizbQuarter') this.hizbQuarter,
-      @JsonKey(name: 'sajda') this.sajda})
+      @JsonKey(name: 'sajda') this.sajda,
+      @JsonKey(name: 'translation') this.translation})
       : _audioSecondary = audioSecondary,
         super._();
 
@@ -298,10 +313,13 @@ class _$AyahModelImpl extends _AyahModel {
   @override
   @JsonKey(name: 'sajda')
   final dynamic sajda;
+  @override
+  @JsonKey(name: 'translation')
+  final String? translation;
 
   @override
   String toString() {
-    return 'AyahModel(number: $number, text: $text, audio: $audio, audioSecondary: $audioSecondary, numberInSurah: $numberInSurah, juz: $juz, manzil: $manzil, page: $page, ruku: $ruku, hizbQuarter: $hizbQuarter, sajda: $sajda)';
+    return 'AyahModel(number: $number, text: $text, audio: $audio, audioSecondary: $audioSecondary, numberInSurah: $numberInSurah, juz: $juz, manzil: $manzil, page: $page, ruku: $ruku, hizbQuarter: $hizbQuarter, sajda: $sajda, translation: $translation)';
   }
 
   @override
@@ -322,7 +340,9 @@ class _$AyahModelImpl extends _AyahModel {
             (identical(other.ruku, ruku) || other.ruku == ruku) &&
             (identical(other.hizbQuarter, hizbQuarter) ||
                 other.hizbQuarter == hizbQuarter) &&
-            const DeepCollectionEquality().equals(other.sajda, sajda));
+            const DeepCollectionEquality().equals(other.sajda, sajda) &&
+            (identical(other.translation, translation) ||
+                other.translation == translation));
   }
 
   @JsonKey(ignore: true)
@@ -339,7 +359,8 @@ class _$AyahModelImpl extends _AyahModel {
       page,
       ruku,
       hizbQuarter,
-      const DeepCollectionEquality().hash(sajda));
+      const DeepCollectionEquality().hash(sajda),
+      translation);
 
   @JsonKey(ignore: true)
   @override
@@ -357,17 +378,19 @@ class _$AyahModelImpl extends _AyahModel {
 
 abstract class _AyahModel extends AyahModel {
   const factory _AyahModel(
-      {@JsonKey(name: 'number') final int? number,
-      @JsonKey(name: 'text') final String? text,
-      @JsonKey(name: 'audio') final String? audio,
-      @JsonKey(name: 'audioSecondary') final List<String>? audioSecondary,
-      @JsonKey(name: 'numberInSurah') final int? numberInSurah,
-      @JsonKey(name: 'juz') final int? juz,
-      @JsonKey(name: 'manzil') final int? manzil,
-      @JsonKey(name: 'page') final int? page,
-      @JsonKey(name: 'ruku') final int? ruku,
-      @JsonKey(name: 'hizbQuarter') final int? hizbQuarter,
-      @JsonKey(name: 'sajda') final dynamic sajda}) = _$AyahModelImpl;
+          {@JsonKey(name: 'number') final int? number,
+          @JsonKey(name: 'text') final String? text,
+          @JsonKey(name: 'audio') final String? audio,
+          @JsonKey(name: 'audioSecondary') final List<String>? audioSecondary,
+          @JsonKey(name: 'numberInSurah') final int? numberInSurah,
+          @JsonKey(name: 'juz') final int? juz,
+          @JsonKey(name: 'manzil') final int? manzil,
+          @JsonKey(name: 'page') final int? page,
+          @JsonKey(name: 'ruku') final int? ruku,
+          @JsonKey(name: 'hizbQuarter') final int? hizbQuarter,
+          @JsonKey(name: 'sajda') final dynamic sajda,
+          @JsonKey(name: 'translation') final String? translation}) =
+      _$AyahModelImpl;
   const _AyahModel._() : super._();
 
   factory _AyahModel.fromJson(Map<String, dynamic> json) =
@@ -406,6 +429,9 @@ abstract class _AyahModel extends AyahModel {
   @override
   @JsonKey(name: 'sajda')
   dynamic get sajda;
+  @override
+  @JsonKey(name: 'translation')
+  String? get translation;
   @override
   @JsonKey(ignore: true)
   _$$AyahModelImplCopyWith<_$AyahModelImpl> get copyWith =>

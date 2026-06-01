@@ -12,9 +12,13 @@ class AyahEntity extends Equatable {
     this.page,
     this.surahNumber,
     this.surahName,
+    this.surahEnglishName,
     this.translation,
     this.transliteration,
     this.sajda,
+    this.ruku,
+    this.manzil,
+    this.hizbQuarter,
   });
 
   /// Absolute ayah number in the Quran
@@ -38,8 +42,11 @@ class AyahEntity extends Equatable {
   /// The surah number this ayah belongs to
   final int? surahNumber;
 
-  /// The surah name this ayah belongs to
+  /// The surah name (Arabic) this ayah belongs to
   final String? surahName;
+
+  /// The surah English name this ayah belongs to
+  final String? surahEnglishName;
 
   /// Translation text (optional)
   final String? translation;
@@ -49,6 +56,15 @@ class AyahEntity extends Equatable {
 
   /// Sajda information if this ayah requires prostration
   final bool? sajda;
+
+  /// Ruku number
+  final int? ruku;
+
+  /// Manzil number
+  final int? manzil;
+
+  /// Hizb quarter number
+  final int? hizbQuarter;
 
   @override
   List<Object?> get props => [
@@ -60,8 +76,12 @@ class AyahEntity extends Equatable {
         page,
         surahNumber,
         surahName,
+        surahEnglishName,
         translation,
         transliteration,
         sajda,
+        ruku,
+        manzil,
+        hizbQuarter,
       ];
 }

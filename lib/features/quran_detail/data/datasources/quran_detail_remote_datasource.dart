@@ -31,16 +31,38 @@ class QuranDetailRemoteDataSourceImpl
     required String reciterIdentifier,
   }) async {
     try {
-      final endpoint = ApiConstant.getSurah
+      // Fetch both audio and translation editions
+      final editions = '$reciterIdentifier,${ApiConstant.translationIndonesian}';
+      final endpoint = ApiConstant.getSurahMultiEditions
           .replaceAll('{surah}', surahNumber.toString())
-          .replaceAll('{edition}', reciterIdentifier);
+          .replaceAll('{editions}', editions);
 
       AppLogger.network('GET $endpoint');
 
       final response = await _dio.get(endpoint);
 
       if (response.data['status'] == 'OK' && response.data['data'] != null) {
-        return response.data['data'] as Map<String, dynamic>;
+        final data = response.data['data'] as List<dynamic>;
+
+        // Data is an array with two elements: [audioEdition, translationEdition]
+        if (data.length >= 2) {
+          final audioData = data[0] as Map<String, dynamic>;
+          final translationData = data[1] as Map<String, dynamic>;
+
+          // Merge audio ayahs with translation
+          final audioAyahs = audioData['ayahs'] as List<dynamic>;
+          final translationAyahs = translationData['ayahs'] as List<dynamic>;
+
+          // Add translation to each ayah
+          for (int i = 0; i < audioAyahs.length && i < translationAyahs.length; i++) {
+            audioAyahs[i]['translation'] = translationAyahs[i]['text'];
+          }
+
+          return audioData;
+        }
+
+        // Fallback to audio only if translation not available
+        return data[0] as Map<String, dynamic>;
       }
 
       throw Exception('Failed to get surah detail');

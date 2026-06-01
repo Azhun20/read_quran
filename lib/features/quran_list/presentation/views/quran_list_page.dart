@@ -3,12 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:read_quran/configs/routes/route.dart';
 import 'package:read_quran/core/extensions/context_extensions.dart';
+import 'package:read_quran/features/quran_list/presentation/cubit/quran_list_cubit.dart';
+import 'package:read_quran/features/quran_list/presentation/widgets/search_bar_widget.dart';
+import 'package:read_quran/features/quran_list/presentation/widgets/surah_card.dart';
 import 'package:read_quran/shared/domain/entities/quran/surah_entity.dart';
 import 'package:shimmer/shimmer.dart';
-
-import '../cubit/quran_list_cubit.dart';
-import '../widgets/surah_card.dart';
-import '../widgets/search_bar_widget.dart';
 
 class QuranListPage extends StatefulWidget {
   const QuranListPage({super.key});
@@ -20,6 +19,9 @@ class QuranListPage extends StatefulWidget {
 }
 
 class _QuranListPageState extends State<QuranListPage> {
+  final _focusNode = FocusNode();
+  final _textController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -30,9 +32,36 @@ class _QuranListPageState extends State<QuranListPage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _focusNode.dispose();
+    _textController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.colorScheme.surface,
+      appBar: AppBar(
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Al-Qur'an",
+              style: context.textTheme.headlineSmall?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: context.colorScheme.secondary,
+              ),
+            ),
+            Text(
+              'All 114 Surahs',
+              style: context.textTheme.bodyMedium?.copyWith(
+                color: context.colorScheme.secondary,
+              ),
+            ),
+            const SizedBox(height: 4),
+          ],
+        ),
+      ),
       body: SafeArea(
         child: Column(
           children: [
@@ -43,7 +72,7 @@ class _QuranListPageState extends State<QuranListPage> {
                 color: context.colorScheme.surface,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
+                    color: Colors.black.withValues(alpha: 0.05),
                     blurRadius: 10,
                     offset: const Offset(0, 2),
                   ),
@@ -52,23 +81,10 @@ class _QuranListPageState extends State<QuranListPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Read Quran',
-                    style: context.textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: context.colorScheme.onSurface,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'All 114 Surahs',
-                    style: context.textTheme.bodyMedium?.copyWith(
-                      color: context.colorScheme.onSurface.withOpacity(0.7),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  // Search bar
+                  // Search bar for filtering surahs
                   SearchBarWidget(
+                    textController: _textController,
+                    focusNode: _focusNode,
                     onChanged: (query) {
                       context.read<QuranListCubit>().searchSurahs(query);
                     },

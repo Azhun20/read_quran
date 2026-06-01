@@ -9,6 +9,8 @@ import 'package:read_quran/features/quran_detail/presentation/cubit/quran_detail
 import 'package:read_quran/features/quran_detail/presentation/views/quran_detail_page.dart';
 import 'package:read_quran/features/quran_list/presentation/cubit/quran_list_cubit.dart';
 import 'package:read_quran/features/quran_list/presentation/views/quran_list_page.dart';
+import 'package:read_quran/features/quran_search/presentation/cubit/quran_search_cubit.dart';
+import 'package:read_quran/features/quran_search/presentation/views/quran_search_page.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
@@ -55,7 +57,16 @@ class AppRouter {
           );
         },
       ),
-      // TODO: Add quran_search route
+      GoRoute(
+        path: Route.quranSearch,
+        name: Route.quranSearch,
+        pageBuilder: (context, state) => MaterialPage(
+          child: BlocProvider(
+            create: (context) => sl<QuranSearchCubit>(),
+            child: const QuranSearchPage(),
+          ),
+        ),
+      ),
     ],
   );
 }

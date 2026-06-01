@@ -3,11 +3,7 @@ import 'package:read_quran/core/extensions/context_extensions.dart';
 import 'package:read_quran/shared/domain/entities/quran/surah_entity.dart';
 
 class SurahCard extends StatelessWidget {
-  const SurahCard({
-    super.key,
-    required this.surah,
-    required this.onTap,
-  });
+  const SurahCard({super.key, required this.surah, required this.onTap});
 
   final SurahEntity surah;
   final VoidCallback onTap;
@@ -23,7 +19,7 @@ class SurahCard extends StatelessWidget {
           color: context.colorScheme.surface,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: context.colorScheme.outlineVariant.withOpacity(0.3),
+            color: context.colorScheme.outlineVariant.withValues(alpha: 0.3),
           ),
           boxShadow: [
             BoxShadow(
@@ -68,6 +64,7 @@ class SurahCard extends StatelessWidget {
                           surah.englishName ?? '',
                           style: context.textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.w600,
+                            color: context.colorScheme.primary,
                           ),
                         ),
                       ),
@@ -90,7 +87,9 @@ class SurahCard extends StatelessWidget {
                         child: Text(
                           surah.englishNameTranslation ?? '',
                           style: context.textTheme.bodyMedium?.copyWith(
-                            color: context.colorScheme.onSurface.withOpacity(0.7),
+                            color: context.colorScheme.onSurface.withOpacity(
+                              0.7,
+                            ),
                           ),
                         ),
                       ),
@@ -101,7 +100,9 @@ class SurahCard extends StatelessWidget {
                           vertical: 2,
                         ),
                         decoration: BoxDecoration(
-                          color: context.colorScheme.primary.withOpacity(0.1),
+                          color: context.colorScheme.primary.withValues(
+                            alpha: 0.1,
+                          ),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
@@ -119,7 +120,7 @@ class SurahCard extends StatelessWidget {
                   Text(
                     surah.revelationType ?? '',
                     style: context.textTheme.bodySmall?.copyWith(
-                      color: context.colorScheme.onSurface.withOpacity(0.6),
+                      color: context.colorScheme.secondary,
                       fontStyle: FontStyle.italic,
                     ),
                   ),

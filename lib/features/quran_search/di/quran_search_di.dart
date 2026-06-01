@@ -1,5 +1,4 @@
 import '../../../core/di/service_locator.dart';
-import '../../../utils/services/api_service.dart';
 import '../data/datasources/quran_search_remote_datasource.dart';
 import '../data/repositories/quran_search_repository_impl.dart';
 import '../domain/repositories/quran_search_repository.dart';
@@ -10,18 +9,26 @@ class QuranSearchDI {
   static void inject() {
     if (sl.isRegistered<QuranSearchRepository>()) return;
 
-    sl
-      ..registerLazySingleton<QuranSearchRemoteDataSource>(
-        () => QuranSearchRemoteDataSource(sl<ApiService>()),
-      )
-      ..registerLazySingleton<QuranSearchRepository>(
-        () => QuranSearchRepositoryImpl(sl<QuranSearchRemoteDataSource>()),
-      )
-      ..registerLazySingleton<GetQuranSearchListUseCase>(
-        () => GetQuranSearchListUseCase(sl<QuranSearchRepository>()),
-      )
-      ..registerFactory<QuranSearchCubit>(
-        () => QuranSearchCubit(sl<GetQuranSearchListUseCase>()),
-      );
+    // Data sources
+    sl.registerLazySingleton<QuranSearchRemoteDataSource>(
+      () => QuranSearchRemoteDataSourceImpl(),
+    );
+
+    // Repository
+    sl.registerLazySingleton<QuranSearchRepository>(
+      () => QuranSearchRepositoryImpl(sl<QuranSearchRemoteDataSource>()),
+    );
+
+    // Use cases
+    sl.registerLazySingleton<SearchQuranUseCase>(
+      () => SearchQuranUseCase(sl<QuranSearchRepository>()),
+    );
+
+    // Cubit
+    sl.registerFactory<QuranSearchCubit>(
+      () => QuranSearchCubit(
+        searchQuranUseCase: sl<SearchQuranUseCase>(),
+      ),
+    );
   }
 }

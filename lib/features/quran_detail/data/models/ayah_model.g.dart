@@ -21,6 +21,7 @@ _$AyahModelImpl _$$AyahModelImplFromJson(Map<String, dynamic> json) =>
       ruku: (json['ruku'] as num?)?.toInt(),
       hizbQuarter: (json['hizbQuarter'] as num?)?.toInt(),
       sajda: json['sajda'],
+      translation: json['translation'] as String?,
     );
 
 Map<String, dynamic> _$$AyahModelImplToJson(_$AyahModelImpl instance) =>
@@ -36,4 +37,5 @@ Map<String, dynamic> _$$AyahModelImplToJson(_$AyahModelImpl instance) =>
       'ruku': instance.ruku,
       'hizbQuarter': instance.hizbQuarter,
       'sajda': instance.sajda,
+      'translation': instance.translation,
     };
