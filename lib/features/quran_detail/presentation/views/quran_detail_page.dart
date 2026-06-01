@@ -23,6 +23,7 @@ class QuranDetailPage extends StatefulWidget {
 
 class _QuranDetailPageState extends State<QuranDetailPage> {
   final Map<int, GlobalKey> _itemKeys = {};
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -35,11 +36,28 @@ class _QuranDetailPageState extends State<QuranDetailPage> {
     });
   }
 
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   GlobalKey _keyForIndex(int index) {
     return _itemKeys.putIfAbsent(index, () => GlobalKey());
   }
 
   void _scrollToIndex(int index) {
+    // For index 0 (first ayah), scroll to top using controller
+    if (index == 0) {
+      _scrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.easeInOut,
+      );
+      return;
+    }
+
+    // For other indices, try to use ensureVisible
     final key = _itemKeys[index];
     final ctx = key?.currentContext;
     if (ctx == null) return;
@@ -109,6 +127,7 @@ class _QuranDetailPageState extends State<QuranDetailPage> {
                       : state.errorMessage != null
                       ? _buildErrorWidget(state.errorMessage!)
                       : ListView.builder(
+                          controller: _scrollController,
                           padding: const EdgeInsets.only(bottom: 100),
                           itemCount: state.ayahs.length,
                           itemBuilder: (context, index) {
