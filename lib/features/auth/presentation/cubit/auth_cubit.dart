@@ -80,7 +80,7 @@ class AuthCubit extends Cubit<AuthState> {
       },
       (_) {
         AppLogger.auth('Logout successful');
-        emit(const AuthState(isAuthenticated: false));
+        emit(const AuthState());
       },
     );
   }

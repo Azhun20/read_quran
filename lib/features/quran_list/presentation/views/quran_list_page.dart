@@ -185,7 +185,7 @@ class _QuranListPageState extends State<QuranListPage> {
               message,
               textAlign: TextAlign.center,
               style: context.textTheme.bodyMedium?.copyWith(
-                color: context.colorScheme.onSurface.withOpacity(0.7),
+                color: context.colorScheme.onSurface.withValues(alpha: 0.7),
               ),
             ),
             const SizedBox(height: 24),
@@ -210,7 +210,7 @@ class _QuranListPageState extends State<QuranListPage> {
           Icon(
             Icons.search_off,
             size: 64,
-            color: context.colorScheme.onSurface.withOpacity(0.3),
+            color: context.colorScheme.onSurface.withValues(alpha: 0.3),
           ),
           const SizedBox(height: 16),
           Text('No Surahs Found', style: context.textTheme.titleLarge),
@@ -218,7 +218,7 @@ class _QuranListPageState extends State<QuranListPage> {
           Text(
             'Try searching with a different keyword',
             style: context.textTheme.bodyMedium?.copyWith(
-              color: context.colorScheme.onSurface.withOpacity(0.7),
+              color: context.colorScheme.onSurface.withValues(alpha: 0.7),
             ),
           ),
         ],

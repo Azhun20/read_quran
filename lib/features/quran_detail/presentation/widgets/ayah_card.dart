@@ -36,7 +36,7 @@ class _AyahCardState extends State<AyahCard> {
           border: Border.all(
             color: widget.isPlaying
                 ? context.colorScheme.primary
-                : context.colorScheme.outlineVariant.withOpacity(0.3),
+                : context.colorScheme.outlineVariant.withValues(alpha: 0.3),
             width: widget.isPlaying ? 2 : 1,
           ),
           borderRadius: BorderRadius.circular(12),
@@ -52,7 +52,7 @@ class _AyahCardState extends State<AyahCard> {
                   decoration: BoxDecoration(
                     color: widget.isPlaying
                         ? context.colorScheme.primary
-                        : context.colorScheme.primary.withOpacity(0.1),
+                        : context.colorScheme.primary.withValues(alpha: 0.1),
                     shape: BoxShape.circle,
                   ),
                   child: Center(
@@ -97,7 +97,7 @@ class _AyahCardState extends State<AyahCard> {
                   if (hasTranslation) ...[
                     const SizedBox(height: 12),
                     Divider(
-                      color: context.colorScheme.outlineVariant.withOpacity(
+                      color: context.colorScheme.outlineVariant.withValues(alpha: 
                         0.3,
                       ),
                       thickness: 1,
@@ -111,7 +111,7 @@ class _AyahCardState extends State<AyahCard> {
                         Text(
                           widget.ayah.translation!,
                           style: context.textTheme.bodyMedium?.copyWith(
-                            color: context.colorScheme.onSurface.withOpacity(
+                            color: context.colorScheme.onSurface.withValues(alpha: 
                               0.8,
                             ),
                             height: 1.6,

@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:read_quran/core/logging/app_logger.dart';
-import 'package:read_quran/shared/domain/entities/quran/ayah_entity.dart';
 import 'package:read_quran/features/quran_search/domain/usecases/get_quran_search_list_usecase.dart';
+import 'package:read_quran/shared/domain/entities/quran/ayah_entity.dart';
 
 part 'quran_search_state.dart';
 part 'quran_search_cubit.freezed.dart';

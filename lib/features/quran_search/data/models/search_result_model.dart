@@ -46,7 +46,7 @@ class SearchMatchModel with _$SearchMatchModel {
     return AyahEntity(
       number: number,
       text: text,
-      audioUrl: null, // Search API doesn't return audio
+      // audioUrl omitted (null) - Search API doesn't return audio
       numberInSurah: numberInSurah,
       juz: juz,
       page: page,

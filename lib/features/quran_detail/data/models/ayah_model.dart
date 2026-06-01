@@ -19,7 +19,7 @@ class AyahModel with _$AyahModel {
     @JsonKey(name: 'page') int? page,
     @JsonKey(name: 'ruku') int? ruku,
     @JsonKey(name: 'hizbQuarter') int? hizbQuarter,
-    @JsonKey(name: 'sajda') dynamic sajda,
+    @JsonKey(name: 'sajda') Object? sajda,
     @JsonKey(name: 'translation') String? translation,
   }) = _AyahModel;
 

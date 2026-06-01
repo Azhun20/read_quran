@@ -31,7 +31,7 @@ class AppLogger {
   /// Log errors with optional error object and stack trace
   static void error(
     String message, [
-    error,
+    Object? error,
     StackTrace? stackTrace,
     String? tag,
   ]) {

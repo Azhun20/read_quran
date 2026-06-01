@@ -1,12 +1,12 @@
 import 'package:dartz/dartz.dart';
 import 'package:read_quran/core/error/failure.dart';
 import 'package:read_quran/core/logging/app_logger.dart';
+import 'package:read_quran/features/quran_list/data/datasources/quran_list_remote_datasource.dart';
 import 'package:read_quran/features/quran_list/data/models/reciter_model.dart';
 import 'package:read_quran/features/quran_list/data/models/surah_model.dart';
+import 'package:read_quran/features/quran_list/domain/repositories/quran_list_repository.dart';
 import 'package:read_quran/shared/domain/entities/quran/reciter_entity.dart';
 import 'package:read_quran/shared/domain/entities/quran/surah_entity.dart';
-import '../../domain/repositories/quran_list_repository.dart';
-import '../datasources/quran_list_remote_datasource.dart';
 
 /// Implementation of QuranList repository
 class QuranListRepositoryImpl implements QuranListRepository {

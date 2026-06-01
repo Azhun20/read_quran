@@ -1,10 +1,10 @@
-import '../../../core/di/service_locator.dart';
-import '../../../shared/services/audio_player_service.dart';
-import '../data/datasources/quran_detail_remote_datasource.dart';
-import '../data/repositories/quran_detail_repository_impl.dart';
-import '../domain/repositories/quran_detail_repository.dart';
-import '../domain/usecases/get_surah_detail_usecase.dart';
-import '../presentation/cubit/quran_detail_cubit.dart';
+import 'package:read_quran/core/di/service_locator.dart';
+import 'package:read_quran/features/quran_detail/data/datasources/quran_detail_remote_datasource.dart';
+import 'package:read_quran/features/quran_detail/data/repositories/quran_detail_repository_impl.dart';
+import 'package:read_quran/features/quran_detail/domain/repositories/quran_detail_repository.dart';
+import 'package:read_quran/features/quran_detail/domain/usecases/get_surah_detail_usecase.dart';
+import 'package:read_quran/features/quran_detail/presentation/cubit/quran_detail_cubit.dart';
+import 'package:read_quran/shared/services/audio_player_service.dart';
 
 class QuranDetailDI {
   static void inject() {

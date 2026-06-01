@@ -42,7 +42,6 @@ extension ContextExtensions on BuildContext {
       SnackBar(
         content: Text(message),
         backgroundColor: colorScheme.error,
-        duration: const Duration(seconds: 4),
       ),
     );
   }
