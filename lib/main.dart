@@ -4,18 +4,35 @@ import 'package:read_quran/app/router/app_router.dart';
 import 'package:read_quran/configs/themes/theme.dart';
 import 'package:read_quran/core/di/service_locator.dart';
 import 'package:read_quran/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:read_quran/features/splash/splash_screen.dart';
 import 'package:read_quran/shared/widgets/network_status_banner.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Setup dependency injection
+  runApp(const SplashApp());
+
+  // Setup dependency injection in background
   await setupServiceLocator();
 
   // Check auth status
   await sl<AuthCubit>().checkAuthStatus();
 
   runApp(const MyApp());
+}
+
+class SplashApp extends StatelessWidget {
+  const SplashApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Read Quran',
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.light(),
+      home: const SplashScreen(),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {

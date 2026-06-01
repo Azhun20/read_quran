@@ -42,25 +42,22 @@ class _QuranListPageState extends State<QuranListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Al-Qur'an",
-              style: context.textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: context.colorScheme.secondary,
-              ),
-            ),
-            Text(
-              'All 114 Surahs',
-              style: context.textTheme.bodyMedium?.copyWith(
-                color: context.colorScheme.secondary,
-              ),
-            ),
-            const SizedBox(height: 4),
-          ],
+        title: Text(
+          "Al-Qur'an",
+          style: context.textTheme.headlineSmall?.copyWith(
+            fontWeight: FontWeight.bold,
+            color: context.colorScheme.secondary,
+          ),
         ),
+        actions: [
+          Text(
+            '114 Surahs',
+            style: context.textTheme.bodyMedium?.copyWith(
+              color: context.colorScheme.secondary,
+            ),
+          ),
+          const SizedBox(width: 8),
+        ],
       ),
       body: SafeArea(
         child: Column(
