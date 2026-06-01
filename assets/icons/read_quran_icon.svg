@@ -1,0 +1,33 @@
+<svg width="512" height="512" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Read Quran App Icon</title>
+  <desc>Circular Al-Quran calligraphy emblem with gold Arabic text on deep green background</desc>
+
+  <rect width="160" height="160" rx="36" fill="#f5f0e8"/>
+
+  <circle cx="80" cy="80" r="68" fill="#c9a84c"/>
+  <circle cx="80" cy="80" r="62" fill="#1a3d2e"/>
+  <circle cx="80" cy="80" r="57" fill="#1a3d2e" stroke="#c9a84c" stroke-width="1"/>
+
+  <line x1="80" y1="26" x2="80" y2="42" stroke="#c9a84c" stroke-width="3" stroke-linecap="round"/>
+  <line x1="76" y1="26" x2="76" y2="38" stroke="#c9a84c" stroke-width="2" stroke-linecap="round"/>
+  <line x1="84" y1="26" x2="84" y2="38" stroke="#c9a84c" stroke-width="2" stroke-linecap="round"/>
+  <path d="M74,28 Q80,24 86,28" fill="none" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/>
+
+  <text x="80" y="72"
+        font-family="'Scheherazade New', 'Amiri', 'Traditional Arabic', serif"
+        font-size="26" fill="#c9a84c" text-anchor="middle" font-weight="700">الْقُرْآنُ</text>
+
+  <text x="80" y="102"
+        font-family="'Scheherazade New', 'Amiri', 'Traditional Arabic', serif"
+        font-size="24" fill="#c9a84c" text-anchor="middle" font-weight="700">الْكَرِيمُ</text>
+
+  <path d="M60,115 Q80,122 100,115" fill="none" stroke="#c9a84c" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M65,120 Q80,126 95,120" fill="none" stroke="#c9a84c" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
+
+  <path d="M26,72 Q30,80 26,88" fill="none" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M134,72 Q130,80 134,88" fill="none" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/>
+
+  <circle cx="70" cy="108" r="1.5" fill="#c9a84c"/>
+  <circle cx="80" cy="111" r="1.5" fill="#c9a84c"/>
+  <circle cx="90" cy="108" r="1.5" fill="#c9a84c"/>
+</svg>
