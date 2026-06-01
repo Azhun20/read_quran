@@ -96,20 +96,20 @@ class QuranListCubit extends Cubit<QuranListState> {
       }
 
       // Search by Arabic name
-      if (surah.name?.toLowerCase().contains(lowercaseQuery) == true) {
+      if (surah.name?.toLowerCase().contains(lowercaseQuery) ?? false) {
         return true;
       }
 
       // Search by English name
-      if (surah.englishName?.toLowerCase().contains(lowercaseQuery) == true) {
+      if (surah.englishName?.toLowerCase().contains(lowercaseQuery) ?? false) {
         return true;
       }
 
       // Search by English translation
       if (surah.englishNameTranslation
               ?.toLowerCase()
-              .contains(lowercaseQuery) ==
-          true) {
+              .contains(lowercaseQuery) ??
+          false) {
         return true;
       }
 

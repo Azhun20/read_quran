@@ -66,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                     Text(
                       'Login to your account',
                       style: AppFontStyle.body2Regular.copyWith(
-                        color: context.colorScheme.onSurface.withOpacity(0.6),
+                        color: context.colorScheme.onSurface.withValues(alpha: 0.6),
                       ),
                       textAlign: TextAlign.center,
                     ),

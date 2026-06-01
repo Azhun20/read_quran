@@ -100,7 +100,7 @@ class QuranListRemoteDataSourceImpl implements QuranListRemoteDataSource {
 
         // If online, refresh cache in background
         if (_connectivityService.isConnected) {
-          _refreshRecitersCache();
+          _refreshRecitersCache().ignore();
         }
 
         return cachedData;

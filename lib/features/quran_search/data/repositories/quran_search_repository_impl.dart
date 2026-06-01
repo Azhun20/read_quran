@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:read_quran/core/error/failure.dart';
 import 'package:read_quran/core/logging/app_logger.dart';
+import 'package:read_quran/features/quran_search/data/datasources/quran_search_remote_datasource.dart';
 import 'package:read_quran/features/quran_search/data/models/search_result_model.dart';
 import 'package:read_quran/features/quran_search/domain/repositories/quran_search_repository.dart';
 import 'package:read_quran/shared/domain/entities/quran/ayah_entity.dart';
-import '../datasources/quran_search_remote_datasource.dart';
 
 class QuranSearchRepositoryImpl implements QuranSearchRepository {
   QuranSearchRepositoryImpl(this._remoteDataSource);

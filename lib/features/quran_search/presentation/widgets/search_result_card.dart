@@ -24,7 +24,7 @@ class SearchResultCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: context.colorScheme.surface,
           border: Border.all(
-            color: context.colorScheme.outlineVariant.withOpacity(0.3),
+            color: context.colorScheme.outlineVariant.withValues(alpha: 0.3),
           ),
           borderRadius: BorderRadius.circular(12),
         ),
@@ -55,7 +55,7 @@ class SearchResultCard extends StatelessWidget {
                 Text(
                   'Ayah ${ayah.numberInSurah}',
                   style: context.textTheme.bodySmall?.copyWith(
-                    color: context.colorScheme.onSurface.withOpacity(0.6),
+                    color: context.colorScheme.onSurface.withValues(alpha: 0.6),
                   ),
                 ),
                 const Spacer(),
@@ -91,13 +91,13 @@ class SearchResultCard extends StatelessWidget {
                 Icon(
                   Icons.menu_book,
                   size: 14,
-                  color: context.colorScheme.onSurface.withOpacity(0.5),
+                  color: context.colorScheme.onSurface.withValues(alpha: 0.5),
                 ),
                 const SizedBox(width: 4),
                 Text(
                   'Juz ${ayah.juz ?? '-'} " Page ${ayah.page ?? '-'}',
                   style: context.textTheme.bodySmall?.copyWith(
-                    color: context.colorScheme.onSurface.withOpacity(0.5),
+                    color: context.colorScheme.onSurface.withValues(alpha: 0.5),
                   ),
                 ),
               ],

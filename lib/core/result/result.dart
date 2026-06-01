@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 /// A Result type for better error handling without exceptions.
 ///
 /// Example usage:
@@ -11,6 +13,7 @@
 ///   }
 /// }
 /// ```
+@immutable
 sealed class Result<T> {
   const Result();
 
@@ -18,14 +21,14 @@ sealed class Result<T> {
   bool get isFailure => this is Failure<T>;
 
   T? get dataOrNull => switch (this) {
-        Success(data: final data) => data,
-        Failure() => null,
-      };
+    Success(data: final data) => data,
+    Failure() => null,
+  };
 
   String? get errorOrNull => switch (this) {
-        Success() => null,
-        Failure(error: final error) => error,
-      };
+    Success() => null,
+    Failure(error: final error) => error,
+  };
 
   Result<R> map<R>(R Function(T data) transform) {
     return switch (this) {
@@ -53,6 +56,7 @@ sealed class Result<T> {
 }
 
 /// Represents a successful result with data
+@immutable
 class Success<T> extends Result<T> {
   const Success(this.data);
   final T data;
@@ -72,6 +76,7 @@ class Success<T> extends Result<T> {
 }
 
 /// Represents a failed result with an error message
+@immutable
 class Failure<T> extends Result<T> {
   const Failure(this.error);
   final String error;

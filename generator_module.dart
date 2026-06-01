@@ -50,7 +50,6 @@ class Get${nameFeature}ListUseCase {
 
   // DATA
   static String dataSource({required String nameFeature}) {
-    final snake = DataConverter.camelCaseToSnakeCase(nameFeature);
     return """
 import '../../../../utils/services/api_service.dart';
 

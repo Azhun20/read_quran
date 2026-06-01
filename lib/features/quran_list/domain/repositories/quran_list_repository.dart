@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:read_quran/core/error/failure.dart';
-import 'package:read_quran/shared/domain/entities/quran/surah_entity.dart';
 import 'package:read_quran/shared/domain/entities/quran/reciter_entity.dart';
+import 'package:read_quran/shared/domain/entities/quran/surah_entity.dart';
 
 /// Repository interface for QuranList feature
 abstract class QuranListRepository {

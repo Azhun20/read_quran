@@ -10,7 +10,6 @@ class ApiService {
   late final Dio _dio;
   final HiveService _hiveService;
   Function? _unauthorizedHandler;
-  Function? _refreshTokenCallback;
 
   ApiService(this._hiveService) {
     _dio = Dio(
@@ -60,9 +59,5 @@ class ApiService {
 
   void attachUnauthorizedHandler(Function handler) {
     _unauthorizedHandler = handler;
-  }
-
-  void refreshToken(Function callback) {
-    _refreshTokenCallback = callback;
   }
 }

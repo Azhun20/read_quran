@@ -23,7 +23,7 @@ class SurahCard extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.02),
+              color: Colors.black.withValues(alpha: 0.02),
               blurRadius: 4,
               offset: const Offset(0, 2),
             ),
@@ -36,7 +36,7 @@ class SurahCard extends StatelessWidget {
               width: 45,
               height: 45,
               decoration: BoxDecoration(
-                color: context.colorScheme.primary.withOpacity(0.1),
+                color: context.colorScheme.primary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Center(
@@ -87,7 +87,7 @@ class SurahCard extends StatelessWidget {
                         child: Text(
                           surah.englishNameTranslation ?? '',
                           style: context.textTheme.bodyMedium?.copyWith(
-                            color: context.colorScheme.onSurface.withOpacity(
+                            color: context.colorScheme.onSurface.withValues(alpha: 
                               0.7,
                             ),
                           ),
@@ -132,7 +132,7 @@ class SurahCard extends StatelessWidget {
             Icon(
               Icons.arrow_forward_ios,
               size: 16,
-              color: context.colorScheme.onSurface.withOpacity(0.3),
+              color: context.colorScheme.onSurface.withValues(alpha: 0.3),
             ),
           ],
         ),

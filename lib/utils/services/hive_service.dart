@@ -5,7 +5,6 @@ import 'package:read_quran/core/logging/app_logger.dart';
 /// Service for managing local storage using Hive
 class HiveService {
   Box? _authBox;
-  Box? _settingsBox;
   Box? _cacheBox;
 
   /// Initialize Hive and open boxes
@@ -13,7 +12,6 @@ class HiveService {
     try {
       await Hive.initFlutter();
       _authBox = await Hive.openBox(HiveConstant.authBox);
-      _settingsBox = await Hive.openBox(HiveConstant.settingsBox);
       _cacheBox = await Hive.openBox(HiveConstant.cacheBox);
       AppLogger.info('Hive initialized successfully');
     } catch (e, stackTrace) {
@@ -33,7 +31,7 @@ class HiveService {
   }
 
   /// Save a value to auth box
-  Future<void> put(String key, dynamic value) async {
+  Future<void> put(String key, Object? value) async {
     try {
       await _authBox?.put(key, value);
     } catch (e) {
@@ -92,7 +90,7 @@ class HiveService {
   }
 
   /// Save data to cache box
-  Future<void> putCached(String key, dynamic value) async {
+  Future<void> putCached(String key, Object? value) async {
     try {
       await _cacheBox?.put(key, value);
     } catch (e) {

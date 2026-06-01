@@ -132,20 +132,20 @@ class _QuranSearchPageState extends State<QuranSearchPage> {
                         Icon(
                           Icons.search,
                           size: 64,
-                          color: context.colorScheme.primary.withOpacity(0.5),
+                          color: context.colorScheme.primary.withValues(alpha: 0.5),
                         ),
                         const SizedBox(height: 16),
                         Text(
                           'Search for Quran verses',
                           style: context.textTheme.titleMedium?.copyWith(
-                            color: context.colorScheme.onSurface.withOpacity(0.6),
+                            color: context.colorScheme.onSurface.withValues(alpha: 0.6),
                           ),
                         ),
                         const SizedBox(height: 8),
                         Text(
                           'Enter keywords to find verses',
                           style: context.textTheme.bodyMedium?.copyWith(
-                            color: context.colorScheme.onSurface.withOpacity(0.4),
+                            color: context.colorScheme.onSurface.withValues(alpha: 0.4),
                           ),
                         ),
                       ],
@@ -162,20 +162,20 @@ class _QuranSearchPageState extends State<QuranSearchPage> {
                         Icon(
                           Icons.search_off,
                           size: 64,
-                          color: context.colorScheme.primary.withOpacity(0.5),
+                          color: context.colorScheme.primary.withValues(alpha: 0.5),
                         ),
                         const SizedBox(height: 16),
                         Text(
                           'No results found',
                           style: context.textTheme.titleMedium?.copyWith(
-                            color: context.colorScheme.onSurface.withOpacity(0.6),
+                            color: context.colorScheme.onSurface.withValues(alpha: 0.6),
                           ),
                         ),
                         const SizedBox(height: 8),
                         Text(
                           'Try different keywords',
                           style: context.textTheme.bodyMedium?.copyWith(
-                            color: context.colorScheme.onSurface.withOpacity(0.4),
+                            color: context.colorScheme.onSurface.withValues(alpha: 0.4),
                           ),
                         ),
                       ],

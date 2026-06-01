@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:read_quran/core/error/failure.dart';
 import 'package:read_quran/core/logging/app_logger.dart';
+import 'package:read_quran/features/quran_detail/data/datasources/quran_detail_remote_datasource.dart';
 import 'package:read_quran/features/quran_detail/data/models/surah_detail_model.dart';
-import '../../domain/repositories/quran_detail_repository.dart';
-import '../datasources/quran_detail_remote_datasource.dart';
+import 'package:read_quran/features/quran_detail/domain/repositories/quran_detail_repository.dart';
 
 /// Implementation of QuranDetail repository
 class QuranDetailRepositoryImpl implements QuranDetailRepository {

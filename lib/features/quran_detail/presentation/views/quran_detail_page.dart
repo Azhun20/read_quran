@@ -59,22 +59,17 @@ class _QuranDetailPageState extends State<QuranDetailPage>
       case AppLifecycleState.resumed:
         // App is back in foreground
         _onAppResumed();
-        break;
       case AppLifecycleState.paused:
         // App is in background
         _onAppPaused();
-        break;
       case AppLifecycleState.inactive:
         // App is temporarily inactive (e.g., phone call, system dialog)
         // Don't save state here, wait for paused
-        break;
       case AppLifecycleState.detached:
         // App is closing
         _onAppPaused();
-        break;
       case AppLifecycleState.hidden:
         // App is hidden (rarely used)
-        break;
     }
   }
 
