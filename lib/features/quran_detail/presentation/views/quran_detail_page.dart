@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:read_quran/core/di/service_locator.dart';
 import 'package:read_quran/core/extensions/context_extensions.dart';
+import 'package:read_quran/features/quran_detail/data/models/playback_state_model.dart';
 import 'package:read_quran/features/quran_detail/presentation/cubit/quran_detail_cubit.dart';
 import 'package:read_quran/features/quran_detail/presentation/widgets/audio_controls_widget.dart';
 import 'package:read_quran/features/quran_detail/presentation/widgets/ayah_card.dart';
+import 'package:read_quran/utils/services/hive_service.dart';
 
 class QuranDetailPage extends StatefulWidget {
   const QuranDetailPage({
@@ -21,25 +24,166 @@ class QuranDetailPage extends StatefulWidget {
   State<QuranDetailPage> createState() => _QuranDetailPageState();
 }
 
-class _QuranDetailPageState extends State<QuranDetailPage> {
+class _QuranDetailPageState extends State<QuranDetailPage>
+    with WidgetsBindingObserver {
   final Map<int, GlobalKey> _itemKeys = {};
   final ScrollController _scrollController = ScrollController();
+  final HiveService _hiveService = sl<HiveService>();
+  bool _hasShownRestorePrompt = false;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<QuranDetailCubit>().loadSurahDetail(
         surahNumber: widget.surahNumber,
         reciterIdentifier: widget.reciterIdentifier,
       );
+      _checkForSavedState();
     });
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _scrollController.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+
+    switch (state) {
+      case AppLifecycleState.resumed:
+        // App is back in foreground
+        _onAppResumed();
+        break;
+      case AppLifecycleState.paused:
+        // App is in background
+        _onAppPaused();
+        break;
+      case AppLifecycleState.inactive:
+        // App is temporarily inactive (e.g., phone call, system dialog)
+        // Don't save state here, wait for paused
+        break;
+      case AppLifecycleState.detached:
+        // App is closing
+        _onAppPaused();
+        break;
+      case AppLifecycleState.hidden:
+        // App is hidden (rarely used)
+        break;
+    }
+  }
+
+  /// Save playback state when app goes to background
+  void _onAppPaused() {
+    final cubitState = context.read<QuranDetailCubit>().state;
+
+    // Only save if we have a loaded surah
+    if (cubitState.surah == null || cubitState.ayahs.isEmpty) return;
+
+    final playbackState = PlaybackStateModel(
+      surahNumber: widget.surahNumber,
+      surahName: cubitState.surah!.name ?? '',
+      currentAyahIndex: cubitState.currentAyahIndex,
+      totalAyahs: cubitState.ayahs.length,
+      reciterIdentifier: widget.reciterIdentifier,
+      wasPlaying: cubitState.isPlaying,
+      positionInMilliseconds: cubitState.currentPosition?.inMilliseconds ?? 0,
+      savedAtTimestamp: DateTime.now().millisecondsSinceEpoch,
+    );
+
+    _hiveService.savePlaybackState(playbackState.toJson());
+  }
+
+  /// Restore or sync state when app comes to foreground
+  void _onAppResumed() {
+    // Just sync UI with current audio player state
+    // The audio should still be playing/paused as it was
+  }
+
+  /// Check for saved playback state and prompt user to restore
+  void _checkForSavedState() {
+    if (_hasShownRestorePrompt) return;
+
+    final savedStateJson = _hiveService.getPlaybackState();
+    if (savedStateJson == null) return;
+
+    try {
+      final savedState = PlaybackStateModel.fromJson(savedStateJson);
+
+      // Check if saved state is for current surah
+      if (savedState.surahNumber != widget.surahNumber) return;
+
+      // Check if state is not too old (e.g., saved within last 24 hours)
+      final savedTime = DateTime.fromMillisecondsSinceEpoch(savedState.savedAtTimestamp);
+      final hoursSinceSaved = DateTime.now().difference(savedTime).inHours;
+
+      if (hoursSinceSaved > 24) {
+        _hiveService.clearPlaybackState();
+        return;
+      }
+
+      _hasShownRestorePrompt = true;
+
+      // Show snackbar to restore playback
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Resume from Ayah ${savedState.currentAyahIndex + 1}?',
+              ),
+              action: SnackBarAction(
+                label: 'Resume',
+                onPressed: () => _restorePlaybackState(savedState),
+              ),
+              duration: const Duration(seconds: 5),
+            ),
+          );
+        }
+      });
+    } catch (e) {
+      // If there's an error parsing saved state, clear it
+      _hiveService.clearPlaybackState();
+    }
+  }
+
+  /// Restore playback state from saved data
+  void _restorePlaybackState(PlaybackStateModel savedState) {
+    // Wait for surah to be loaded
+    final cubitState = context.read<QuranDetailCubit>().state;
+    if (cubitState.ayahs.isEmpty) {
+      // Wait a bit and try again
+      Future.delayed(const Duration(milliseconds: 500), () {
+        if (mounted) _restorePlaybackState(savedState);
+      });
+      return;
+    }
+
+    // Navigate to the saved ayah
+    context.read<QuranDetailCubit>().playAyahAt(savedState.currentAyahIndex);
+
+    // If was playing, start playing; otherwise just load the ayah
+    if (!savedState.wasPlaying) {
+      context.read<QuranDetailCubit>().pause();
+    }
+
+    // Clear the saved state after restoring
+    _hiveService.clearPlaybackState();
+
+    // Show confirmation
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Resumed from Ayah ${savedState.currentAyahIndex + 1}'),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    }
   }
 
   GlobalKey _keyForIndex(int index) {

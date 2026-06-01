@@ -163,4 +163,40 @@ class HiveService {
       AppLogger.error('Failed to clear cache', e);
     }
   }
+
+  // Playback state methods
+
+  /// Save playback state
+  Future<void> savePlaybackState(Map<String, dynamic> state) async {
+    try {
+      await putCached(HiveConstant.playbackStateKey, state);
+      AppLogger.info('Saved playback state');
+    } catch (e) {
+      AppLogger.error('Failed to save playback state', e);
+    }
+  }
+
+  /// Get saved playback state
+  Map<String, dynamic>? getPlaybackState() {
+    try {
+      final state = getCached<Map<dynamic, dynamic>>(HiveConstant.playbackStateKey);
+      if (state == null) return null;
+
+      // Convert dynamic map to String keys
+      return Map<String, dynamic>.from(state);
+    } catch (e) {
+      AppLogger.error('Failed to get playback state', e);
+      return null;
+    }
+  }
+
+  /// Clear playback state
+  Future<void> clearPlaybackState() async {
+    try {
+      await deleteCached(HiveConstant.playbackStateKey);
+      AppLogger.info('Cleared playback state');
+    } catch (e) {
+      AppLogger.error('Failed to clear playback state', e);
+    }
+  }
 }
